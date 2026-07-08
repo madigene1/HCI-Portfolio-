@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Scout — Camping Permit Booking &amp; Reminders · Case Study</title>
+<meta name="description" content="Case study: Scout, a mobile-first web app that turns the deadline-driven national park permit process into a guided flow with proactive reminders — built on a full AI-assisted development workflow." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=Share+Tech+Mono&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../design-system/tokens.css" />
+<style>
+  /* ---- screen accent: ONE pop family per DESIGN.md (blue) ---- */
+  :root { --accent: var(--color-accent-blue); --accent-soft: var(--color-accent-blue-soft); }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--color-bg-base);
+    color: var(--color-ink-body);
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding-inline: var(--page-pad-inline);
+  }
+  @media (min-width: 768px) { .wrap { padding-inline: var(--page-pad-inline-md); } }
+  @media (min-width: 1024px) { .wrap { padding-inline: var(--page-pad-inline-lg); } }
+
+  .label { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); }
+
+  .skip { position: absolute; left: -999px; top: 0; background: var(--color-ink-strong); color: var(--color-ink-inverse); padding: var(--space-2) var(--space-4); z-index: var(--z-toast); }
+  .skip:focus { left: var(--space-4); }
+
+  :where(a, button, input, textarea):focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* =================== NAVBAR =================== */
+  .nav { position: sticky; top: 0; z-index: var(--z-sticky); background: var(--color-bg-base); border-bottom: var(--border-width-hairline) solid var(--color-border-default); transition: box-shadow var(--duration-fast) var(--ease-standard); }
+  .nav.scrolled { box-shadow: var(--shadow-paper); }
+  .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { font-family: var(--font-display); font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-ink-strong); text-decoration: none; }
+  .nav__links { display: flex; align-items: center; gap: var(--space-6); list-style: none; }
+  .nav__links a { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); text-decoration: none; padding: var(--space-2) 0; border-bottom: 2px solid transparent; transition: color var(--duration-fast) var(--ease-standard); }
+  .nav__links a:hover { color: var(--color-ink-strong); }
+  .nav__links a.current { color: var(--color-ink-strong); border-bottom-color: var(--accent); }
+  .nav__toggle { display: none; width: 44px; height: 44px; background: none; border: none; cursor: pointer; align-items: center; justify-content: center; }
+  .nav__toggle span, .nav__toggle span::before, .nav__toggle span::after { content: ""; display: block; width: 22px; height: 2px; background: var(--color-ink-strong); position: relative; transition: transform var(--duration-fast) var(--ease-standard); }
+  .nav__toggle span::before { position: absolute; top: -7px; }
+  .nav__toggle span::after { position: absolute; top: 7px; }
+
+  @media (max-width: 767px) {
+    .nav__toggle { display: inline-flex; }
+    .nav__links { position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; align-items: flex-start; gap: 0; background: var(--color-bg-base); border-bottom: var(--border-width-hairline) solid var(--color-border-default); padding: var(--space-2) var(--page-pad-inline) var(--space-4); box-shadow: var(--shadow-raised); display: none; }
+    .nav__links.open { display: flex; }
+    .nav__links a { width: 100%; padding: var(--space-3) 0; border-bottom: var(--border-width-hairline) solid var(--color-border-subtle); }
+    .nav__links a.current { border-bottom-color: var(--color-border-subtle); color: var(--accent); }
+  }
+
+  /* =================== BUTTONS =================== */
+  .btn { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; padding: var(--space-3) var(--space-6); font-family: var(--font-sans); font-size: var(--font-size-body); font-weight: var(--font-weight-medium); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); border: none; border-radius: var(--radius-none); cursor: pointer; text-decoration: none; transition: background var(--duration-fast) var(--ease-standard), filter var(--duration-fast) var(--ease-standard), transform var(--duration-instant) var(--ease-standard); }
+  .btn--primary { background: var(--color-bg-inverse); color: var(--color-ink-inverse); }
+  .btn--primary:hover { background: #333; }
+  .btn--accent { background: var(--accent); color: #fff; }
+  .btn--accent:hover { filter: brightness(1.08); }
+  .btn--secondary { background: transparent; color: var(--color-ink-strong); border: var(--border-width-default) solid var(--color-border-strong); }
+  .btn--secondary:hover { background: var(--color-bg-sunken); }
+  .btn:active { transform: translateY(1px); }
+
+  /* =================== CASE STUDY HERO =================== */
+  .cs-hero { padding-block: var(--space-16) var(--space-12); border-bottom: var(--border-width-hairline) solid var(--color-border-subtle); }
+  .cs-back { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); text-decoration: none; margin-bottom: var(--space-8); }
+  .cs-back:hover { color: var(--color-ink-strong); }
+  .cs-hero__eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6); }
+  .cs-hero h1 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-black);
+    font-size: var(--font-size-display-md-fluid);
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--color-ink-strong);
+    max-width: 18ch;
+  }
+  .cs-hero__lede { font-size: var(--font-size-lead); color: var(--color-ink-body); max-width: var(--container-narrow); margin-top: var(--space-6); }
+
+  /* meta strip */
+  .cs-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6) var(--space-8); margin-top: var(--space-12); border-top: var(--border-width-hairline) solid var(--color-border-subtle); padding-top: var(--space-8); }
+  @media (min-width: 768px) { .cs-meta { grid-template-columns: repeat(4, 1fr); } }
+  .cs-meta__k { display: block; margin-bottom: var(--space-2); }
+  .cs-meta__v { font-size: var(--font-size-body-sm); font-weight: var(--font-weight-bold); color: var(--color-ink-strong); }
+
+  .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .tag { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); border: var(--border-width-hairline) solid var(--color-border-default); padding: var(--space-1) var(--space-2); }
+  .pill { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-inverse); background: var(--color-bg-inverse); padding: var(--space-1) var(--space-3); }
+
+  /* =================== COVER =================== */
+  .cover { position: relative; margin-top: var(--space-12); background: var(--color-bg-sunken); border: var(--border-width-hairline) solid var(--color-border-default); box-shadow: var(--shadow-paper); overflow: hidden; }
+  .cover:not(:has(img)) { aspect-ratio: 16 / 9; }
+  .cover img { display: block; width: 100%; height: auto; }
+  .cover__ph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-3); color: var(--color-ink-faint); }
+  .cover__ph svg { width: 56px; height: 56px; }
+
+  /* inline artifact figures (process) */
+  .cs-figure { margin-top: var(--space-8); }
+  .cs-figure__box { position: relative; aspect-ratio: 16 / 9; background: var(--color-bg-sunken); border: var(--border-width-hairline) solid var(--color-border-default); box-shadow: var(--shadow-paper); overflow: hidden; }
+  .cs-figure__box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cs-figure__ph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-3); color: var(--color-ink-faint); text-align: center; padding: var(--space-4); }
+  .cs-figure__ph svg { width: 48px; height: 48px; }
+  .cs-figure figcaption { font-family: var(--font-mono); font-size: var(--font-size-caption); color: var(--color-ink-muted); margin-top: var(--space-3); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); }
+
+  /* approach steps with paired media */
+  .approach-step { margin-top: var(--space-12); }
+  .approach-step:first-of-type { margin-top: var(--space-8); }
+  .approach-step h3 { margin-top: 0; margin-bottom: var(--space-4); font-size: var(--font-size-lead); font-weight: var(--font-weight-bold); color: var(--color-ink-strong); }
+  .approach-step__num { font-family: var(--font-mono); font-size: var(--font-size-caption); letter-spacing: var(--letter-spacing-label); color: var(--accent); display: block; margin-bottom: var(--space-2); }
+  .approach-step p { font-size: var(--font-size-body); color: var(--color-ink-body); }
+  .approach-step .cs-figure { margin-top: var(--space-6); }
+
+  /* from → to comparison */
+  .compare { display: grid; grid-template-columns: 1fr; gap: var(--space-4); align-items: center; margin-top: var(--space-6); }
+  @media (min-width: 640px) { .compare { grid-template-columns: 1fr auto 1fr; gap: var(--space-6); } }
+  .compare .cs-figure { margin-top: 0; }
+  .compare .cs-figure__box { aspect-ratio: 3 / 4; }
+  /* let the comparison break out past the narrow prose column so the screens read larger */
+  @media (min-width: 1024px) { .compare { width: calc(100% + 200px); } }
+  .compare__arrow { font-family: var(--font-mono); font-size: var(--font-size-lead); font-weight: var(--font-weight-bold); color: var(--accent); text-align: center; text-transform: uppercase; letter-spacing: var(--letter-spacing-label); }
+  @media (max-width: 639px) { .compare__arrow { transform: rotate(90deg); } }
+
+  /* =================== SECTIONS =================== */
+  .cs-section { padding-block: var(--space-12); border-bottom: var(--border-width-hairline) solid var(--color-border-subtle); }
+  .cs-section:last-of-type { border-bottom: none; }
+  .cs-section__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-8); }
+  @media (min-width: 1024px) { .cs-section__grid { grid-template-columns: 220px 1fr; gap: var(--space-16); align-items: start; } }
+  .cs-section__head { position: sticky; top: 96px; }
+  @media (max-width: 1023px) { .cs-section__head { position: static; } }
+  .cs-section__num { font-family: var(--font-mono); font-size: var(--font-size-caption); letter-spacing: var(--letter-spacing-label); color: var(--accent); display: block; margin-bottom: var(--space-2); }
+  .cs-section__head h2 { font-family: var(--font-heading); font-weight: var(--font-weight-black); font-size: var(--font-size-display-sm-fluid); line-height: 0.95; text-transform: uppercase; letter-spacing: -0.01em; color: var(--color-ink-strong); }
+
+  .prose { max-width: var(--container-narrow); }
+  .prose > p { font-size: var(--font-size-lead); color: var(--color-ink-body); }
+  .prose > p + p { margin-top: var(--space-4); }
+  .prose h3 { font-size: var(--font-size-lead); font-weight: var(--font-weight-bold); color: var(--color-ink-strong); margin-top: var(--space-12); margin-bottom: var(--space-4); }
+  .prose > p + h3 { margin-top: var(--space-12); }
+
+  /* feature / constraint lists (bold lead + text) */
+  .flist { list-style: none; margin-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
+  .flist li { padding-left: var(--space-6); position: relative; font-size: var(--font-size-body); color: var(--color-ink-body); }
+  .flist li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 10px; height: var(--border-width-heavy); background: var(--accent); }
+  .flist li strong { color: var(--color-ink-strong); font-weight: var(--font-weight-bold); }
+
+  /* numbered steps */
+  .steps { list-style: none; counter-reset: step; margin-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-6); }
+  .steps li { counter-increment: step; padding-left: var(--space-12); position: relative; font-size: var(--font-size-body); color: var(--color-ink-body); }
+  .steps li::before { content: counter(step, decimal-leading-zero); position: absolute; left: 0; top: 0; font-family: var(--font-mono); font-size: var(--font-size-body-sm); font-weight: var(--font-weight-bold); color: var(--color-ink-strong); background: var(--color-bg-sunken); border: var(--border-width-hairline) solid var(--color-border-default); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
+  .steps li strong { color: var(--color-ink-strong); font-weight: var(--font-weight-bold); }
+
+  /* solution feature blocks */
+  .feature { background: var(--color-bg-raised); border: var(--border-width-hairline) solid var(--color-border-subtle); box-shadow: var(--shadow-paper); padding: var(--space-6); margin-top: var(--space-6); }
+  .feature h3 { margin-top: 0; }
+  .feature .label { display: block; margin-bottom: var(--space-3); }
+
+  /* callout (under the hood) */
+  .callout { margin-top: var(--space-8); background: var(--color-bg-inverse); color: var(--color-ink-inverse); padding: var(--space-8); }
+  .callout .label { color: var(--color-ink-inverse); opacity: 0.7; display: block; margin-bottom: var(--space-3); }
+  .callout p { font-size: var(--font-size-lead); }
+
+  /* pull quote */
+  .pullquote { margin-top: var(--space-8); padding-left: var(--space-6); border-left: var(--border-width-heavy) solid var(--accent); }
+  .pullquote p { font-family: var(--font-heading); font-weight: var(--font-weight-heavy); font-size: var(--font-size-lead); color: var(--color-ink-strong); text-transform: none; }
+
+  /* =================== NEXT / FOOTER =================== */
+  .cs-next { padding-block: var(--space-24); text-align: center; }
+  .cs-next h2 { font-family: var(--font-heading); font-weight: var(--font-weight-black); font-size: var(--font-size-display-sm-fluid); line-height: 0.95; text-transform: uppercase; letter-spacing: -0.01em; color: var(--color-ink-strong); margin-bottom: var(--space-8); }
+
+  .footer { padding-block: var(--space-16); border-top: var(--border-width-hairline) solid var(--color-border-subtle); }
+  .footer__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6); }
+  .footer__links { display: flex; gap: var(--space-6); list-style: none; }
+  .footer__links a { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); text-decoration: none; }
+  .footer__links a:hover { color: var(--color-ink-strong); }
+  .footer__copy { font-family: var(--font-mono); font-size: var(--font-size-caption); color: var(--color-ink-faint); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a href="../index.html#top" class="brand">Madison Hobbs</a>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu"><span></span></button>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="../index.html#work" class="current">Work</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="cs-hero" aria-labelledby="cs-title">
+    <div class="wrap">
+      <a href="../index.html#work" class="cs-back">← Back to work</a>
+      <div class="cs-hero__eyebrow">
+        <span class="pill">Case Study</span>
+        <div class="tags">
+          <span class="tag">Web Development</span>
+          <span class="tag">Design</span>
+          <span class="tag">Prototyping</span>
+        </div>
+      </div>
+      <h1 id="cs-title">Scout — Camping Permit Booking &amp; Reminders</h1>
+      <p class="cs-hero__lede">A mobile-first web app that turns the messy, deadline-driven national park permit process into a guided flow with proactive reminders — and the project where I built a full AI-assisted development workflow end to end, from scripted userflows to a live, deployed product with real auth and real data.</p>
+
+      <dl class="cs-meta">
+        <div>
+          <dt class="label cs-meta__k">Role</dt>
+          <dd class="cs-meta__v">Designer</dd>
+        </div>
+        <div>
+          <dt class="label cs-meta__k">Timeline</dt>
+          <dd class="cs-meta__v">2026</dd>
+        </div>
+        <div>
+          <dt class="label cs-meta__k">Class</dt>
+          <dd class="cs-meta__v">AI Development</dd>
+        </div>
+        <div>
+          <dt class="label cs-meta__k">Tools</dt>
+          <dd class="cs-meta__v">Figma, Cursor, Claude, Supabase, GitHub</dd>
+        </div>
+      </dl>
+
+      <figure class="cover">
+        <img src="assets/Scout.png" alt="Scout — cover" onerror="this.remove()" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="cs-section" aria-labelledby="s-overview">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">00</span><h2 id="s-overview">Overview</h2></div>
+      <div class="prose">
+        <p>Scout is a mobile-first web app that helps campers reserve hard-to-get national park campsites by turning the messy, deadline-driven permit process into a guided flow with proactive reminders. This project was also where I built a full AI-assisted development workflow end to end, from scripted userflows and a custom design system through to a live, deployed product with real authentication and real data.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="cs-section" aria-labelledby="s-problem">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">01</span><h2 id="s-problem">Problem</h2></div>
+      <div class="prose">
+        <p>Booking a campsite at a popular national park is a timing game most people lose. Permit windows open on specific future dates, availability is scarce, and the tools that exist (Rec.gov, scattered park websites) assume you already know when and where to look. The user problem: planners miss booking windows because there's no unified way to track when a specific park's permit opens, and no nudge at the right moment. The business/service problem: high intent to camp doesn't convert into bookings, because the critical “window opens” moment happens off-platform and unremembered.</p>
+        <h3>Constraints that shaped the work</h3>
+        <ul class="flist">
+          <li><strong>Permit-window deadlines are fixed and unforgiving.</strong> The experience has to reduce the odds of missing them, not just display them.</li>
+          <li><strong>Availability is external and volatile.</strong> Real inventory and payment live on Rec.gov, so Scout can own intent, tracking, and handoff — but not the transaction itself.</li>
+          <li><strong>Real park data.</strong> Parks and campsites come from the public NPS API, so the catalog had to be built around live, sometimes-incomplete data rather than idealized mockups.</li>
+          <li><strong>Mobile-first.</strong> People plan trips on their phones, so every core flow had to work in a small viewport.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section class="cs-section" aria-labelledby="s-approach">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">02</span><h2 id="s-approach">Approach</h2></div>
+      <div class="prose">
+        <p>I translated the problem into structure before generating a single screen: explicit site architecture, scripted userflows, and a documented design system, each built to double as direct input for AI-assisted development.</p>
+
+        <div class="approach-step">
+          <span class="approach-step__num">Step 01</span>
+          <h3>Userflows written as executable logic, not narrative</h3>
+          <p>I scripted the three core jobs (Discover and Explore Parks, Set a Permit Booking Reminder, Sync Trip and Manage Itinerary) as step-by-step conditional flows, e.g. “user clicks a Park Card → system checks date availability → user clicks Add Reminder → system prompts for calendar permission.” Writing flows at this level of precision is what let AI tools generate a working approximation of the real product on the first pass, rather than a generic template.</p>
+          <figure class="cs-figure">
+            <div class="cs-figure__box">
+              <img src="assets/Scout_User_Flow.png" alt="Scout user flows scripted in Figma" onerror="this.remove()" />
+            </div>
+            <figcaption>User flows — the three core jobs scripted as step-by-step conditional logic.</figcaption>
+          </figure>
+        </div>
+
+        <div class="approach-step">
+          <span class="approach-step__num">Step 02</span>
+          <h3>A documented design system, developed and iterated deliberately</h3>
+          <p>I built the “Field Kit” system (DESIGN.md) from a moodboard through a structured six-step process: analyze the moodboard, define design principles, set design tokens, define components, write the doc, then review and refine. I ran a second full iteration pass once the tokens were tested against a real screen, refining color, type, and spacing rules before scaling to the rest of the app. The result: warm paper surfaces, ink-forward contrast, Neue Haas Grotesk Mono paired with a single Playfair Display editorial moment per screen, and one reserved yellow accent for the primary action on each screen.</p>
+          <figure class="cs-figure">
+            <div class="cs-figure__box">
+              <img src="assets/scoutdesignsystem.png" alt="Scout Field Kit design system" onerror="this.remove()" />
+            </div>
+            <figcaption>The “Field Kit” design system — tokens, type, and components documented before building screens.</figcaption>
+          </figure>
+        </div>
+
+        <div class="approach-step">
+          <span class="approach-step__num">Step 03</span>
+          <h3>Fluency across the AI-assisted build stack</h3>
+          <p>The core skill this project developed was sequencing tools that don't natively talk to each other into one pipeline: Figma Make for early design generation, Cursor (in plan mode, then agent mode) for implementation, Supabase for auth/database/edge functions, GitHub for version control, and Netlify for deployment. Knowing when to hand the AI agent a plan versus when to intervene directly was as much the learning objective as the finished app — the design evolved from an early AI-generated pass to a refined, shipped screen.</p>
+          <div class="compare">
+            <figure class="cs-figure">
+              <div class="cs-figure__box">
+                <img src="assets/Scout_Design_First.png" alt="Scout — early AI-generated design" onerror="this.remove()" />
+              </div>
+              <figcaption>From — early AI-generated design.</figcaption>
+            </figure>
+            <div class="compare__arrow" aria-hidden="true">→</div>
+            <figure class="cs-figure">
+              <div class="cs-figure__box">
+                <img src="assets/Scout_Design_Second.png" alt="Scout — refined, shipped design" onerror="this.remove()" />
+              </div>
+              <figcaption>To — refined, shipped design.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="cs-section" aria-labelledby="s-process">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">03</span><h2 id="s-process">Process</h2></div>
+      <div class="prose">
+        <p>The path from plan to shipped product:</p>
+        <ol class="steps">
+          <li><strong>Site structure and userflows became the IA.</strong> I initialized the app with 11 planned pages (Login, Home, Discover, Park Detail, Campsite Detail, Booking, Trips, Wishlist, Profile, Settings, Notifications) and scripted three full userflows before generating any screens. This became the actual route structure: <code>/discover</code>, <code>/park</code>, <code>/campsite</code>, <code>/book</code>, <code>/trips</code>, <code>/wishlist</code>, <code>/profile</code>, with reminders surfaced across multiple pages rather than buried in one settings screen.</li>
+          <li><strong>Design system before screens, validated and re-tuned once live.</strong> Locking the Field Kit tokens down before generating pages kept roughly a dozen screens visually consistent instead of drifting screen-by-screen, and having it documented meant I could direct the AI agent with rules instead of re-explaining style on every prompt.</li>
+          <li><strong>Database schema generated from the userflows, then reviewed before execution.</strong> Rather than designing tables first, I had Cursor design the Supabase schema directly from the site structure and userflows I'd already written, then reviewed a PLAN.md and explicitly separated planning from execution (plan mode, then agent mode) instead of one-shotting the build.</li>
+          <li><strong>Real data wired deliberately, not bolted on.</strong> I added the Supabase plugin, then integrated the public NPS Parks API through a Supabase edge function so the API key stayed server-side in secrets rather than exposed to the client, treating the “look at the data before you build” step as a discrete part of the process rather than a shortcut.</li>
+          <li><strong>Calendar sync scoped as its own build step.</strong> Once the core flows worked, I specifically prompted for a way to sync permit reminders to a user's personal calendar (mobile or Google), treating notification delivery as a distinct design decision rather than a generic in-app alert.</li>
+          <li><strong>Version control and deployment built into the workflow.</strong> Changes were committed and pushed through GitHub (with secrets and env files excluded), then published to Netlify, making this a live, shareable product rather than a local prototype.</li>
+        </ol>
+
+        <h3>Design artifacts</h3>
+        <p>The planning work that fed the AI-assisted build — from mood, to a documented system, to scripted flows, to screen sketches.</p>
+
+        <figure class="cs-figure">
+          <div class="cs-figure__box">
+            <img src="assets/Scout_MoodBoard.png" alt="Scout moodboard" onerror="this.remove()" />
+          </div>
+          <figcaption>Moodboard — the visual starting point for the “Field Kit” system.</figcaption>
+        </figure>
+
+        <figure class="cs-figure">
+          <div class="cs-figure__box">
+            <img src="assets/scoutdesignsystem.png" alt="Building the DESIGN.md design system doc" onerror="this.remove()" />
+          </div>
+          <figcaption>Building DESIGN.md — moodboard → principles → tokens → components → doc → review, then a second iteration pass.</figcaption>
+        </figure>
+
+        <figure class="cs-figure">
+          <div class="cs-figure__box">
+            <img src="assets/Scout_User_Flow.png" alt="Scout user flows made in Figma" onerror="this.remove()" />
+          </div>
+          <figcaption>User flows made in Figma — the three core jobs scripted as step-by-step conditional logic.</figcaption>
+        </figure>
+
+        <figure class="cs-figure">
+          <div class="cs-figure__box">
+            <img src="assets/Scout_Sketch.png" alt="Early screen sketches" onerror="this.remove()" />
+          </div>
+          <figcaption>Sketching — low-fidelity screen exploration ahead of building the app.</figcaption>
+        </figure>
+
+        <figure class="cs-figure">
+          <div class="cs-figure__box">
+            <img src="assets/Scout_Sketch2.png" alt="Early screen sketches, continued" onerror="this.remove()" />
+          </div>
+          <figcaption>Sketching — further low-fidelity screen exploration.</figcaption>
+        </figure>
+
+        <h3>Key product decisions and trade-offs</h3>
+        <ul class="flist">
+          <li><strong>Track-and-handoff vs. in-app checkout.</strong> I chose to model booking intent and route users to Rec.gov rather than fake a transaction. Trade-off: less “wow” in a demo, but honest, and it matches how the real ecosystem works.</li>
+          <li><strong>Reminders as the hero, not a feature.</strong> Rather than burying reminders in settings, I surfaced a Permit Reminders section on Home and “Add Reminder” on every campsite, betting that proactive nudges are the product's core value.</li>
+          <li><strong>Calendar sync without a heavy integration.</strong> Instead of building OAuth calendar write access, I used a Google Calendar “add event” URL plus a downloadable, shareable .ics file. Trade-off: no two-way sync, but it works across Google, Apple, and device calendars with zero auth friction — the right call for the coursework scope.</li>
+          <li><strong>Real data over mock.</strong> I integrated the live NPS API through a Supabase edge function to keep the key server-side, accepting the extra complexity of handling incomplete or variable API data.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section class="cs-section" aria-labelledby="s-solution">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">04</span><h2 id="s-solution">Solution</h2></div>
+      <div class="prose">
+        <p>Scout shipped two connected experiences.</p>
+
+        <div class="feature">
+          <span class="label">01 — Experience</span>
+          <h3>The permit booking flow</h3>
+          <p>From Discover, users filter parks by activity, region, and season (with a map/list toggle), drill into a park's seasonal guide and campsite list, and enter their desired dates. On the Booking page they confirm reservation details, guests and vehicles, and a transparent fee breakdown, then continue to Rec.gov for the actual payment. The key design move is honesty about the handoff: Scout does the planning, comparison, and prep work that Rec.gov doesn't, then gets the user to the right place to transact. Anything not ready to book can be saved to a Wishlist.</p>
+        </div>
+
+        <div class="feature">
+          <span class="label">02 — Experience</span>
+          <h3>The reminder system</h3>
+          <p>Because the permit window is the decisive moment, reminders are front and center: users set a reminder on any park or campsite, choose timing and notification method, and the app syncs it to their calendar — either via a Google Calendar link or a shareable, downloadable .ics event that works on iOS, Android, and desktop. Trips get the same treatment, so arrival, departure, and permit details land on the user's calendar, and trips can be shared with collaborators.</p>
+        </div>
+
+        <div class="callout">
+          <span class="label">Under the hood</span>
+          <p>Supabase Auth and profiles, RLS-scoped user data, avatar storage, and edge functions for NPS park and climate data.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTCOME -->
+  <section class="cs-section" aria-labelledby="s-outcome">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">05</span><h2 id="s-outcome">Outcome</h2></div>
+      <div class="prose">
+        <p>This is a coursework prototype with real park data and authentication, built solo, deployed live rather than left as a local build.</p>
+        <ul class="flist">
+          <li>Shipped a coherent, real-data product across roughly a dozen routes on a consistent, documented design system, with live NPS parks rather than throwaway mockups.</li>
+          <li>Built and operated a full AI-assisted development pipeline end to end (Figma Make → Cursor → Supabase → GitHub → Netlify), a transferable workflow I can apply to future products, not just this one.</li>
+          <li>Demonstrated the ability to translate ambiguous product goals into structured, machine-readable inputs (userflows, schemas, design tokens) that make AI-assisted development reliable rather than random.</li>
+          <li>Next steps if I continued: usability testing on the reminder and booking-handoff flows, real-time availability data, and instrumentation to measure reminder-set rate and reminder-to-Rec.gov click-through.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFLECTION -->
+  <section class="cs-section" aria-labelledby="s-reflection">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">06</span><h2 id="s-reflection">Reflection</h2></div>
+      <div class="prose">
+        <div class="pullquote">
+          <p>Designing around one decisive moment — the permit window opening — beats designing more features. Anchoring the whole product on that event clarified every downstream decision.</p>
+        </div>
+
+        <h3>What I learned</h3>
+        <ul class="flist">
+          <li>Designing around one decisive moment (the permit window opening) beats designing more features. Anchoring the whole product on that event clarified every downstream decision.</li>
+          <li>Precision in planning artifacts (userflows, schemas, design tokens) is what makes AI-assisted development produce reliable, on-brand output instead of generic results. The more explicit the input, the more usable the output.</li>
+          <li>Building with AI tools is its own skill, distinct from design or engineering. Knowing how to sequence Figma Make, Cursor, Supabase, GitHub, and Netlify — and where to step in and correct the AI's output — was the core capability this project built.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT -->
+  <section class="cs-next">
+    <div class="wrap">
+      <h2>See more work</h2>
+      <a href="../index.html#work" class="btn btn--accent">Back to all projects</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <a href="../index.html#top" class="brand">Madison Hobbs</a>
+    <ul class="footer__links">
+      <li><a href="../index.html#work">Work</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <span class="footer__copy">© 2026 · Madison Hobbs</span>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const toggle = document.querySelector('.nav__toggle');
+  const links = document.getElementById('nav-links');
+
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  links.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>
+</body>
+</html>

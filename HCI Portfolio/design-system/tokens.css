@@ -1,0 +1,160 @@
+/* ============================================================
+   Design Tokens — "Tactile Editorial" system
+   Direction: Tactile · Realistic · Messy · Professional
+   Consume via CSS custom properties: var(--color-bg-base)
+   ============================================================ */
+
+:root {
+  /* ---------- COLOR: NEUTRAL / PAPER BASE ---------- */
+  --color-bg-base: #f4f1ea;        /* primary page background (warm paper) */
+  --color-bg-raised: #faf8f2;      /* raised surface / card on paper */
+  --color-bg-sunken: #ebe7dc;      /* recessed / inset wells */
+  --color-bg-inverse: #1a1a1a;     /* dark blocks, footers */
+
+  /* ---------- COLOR: INK (TEXT + LINES) ---------- */
+  --color-ink-strong: #1a1a1a;     /* headings, primary text (never #000) */
+  --color-ink-body: #2b2926;       /* body copy */
+  --color-ink-muted: #6b6862;      /* captions, metadata, labels */
+  --color-ink-faint: #9c988e;      /* placeholders, disabled */
+  --color-ink-inverse: #f4f1ea;    /* text on dark blocks */
+
+  /* ---------- COLOR: POP ACCENTS (vivid — choose one family per screen) ---------- */
+  --color-accent-blue: #1e3ae6;    /* electric cobalt — primary interactive/focus */
+  --color-accent-red: #ee3a20;     /* vermilion — bold highlights, alerts */
+  --color-accent-yellow: #ffc61a;  /* signal yellow — marks, emphasis */
+  --color-accent-green: #1f7a4d;   /* vivid green — positive */
+  --color-accent-blue-soft: #d9defb;
+  --color-accent-red-soft: #fbd9d2;
+  --color-accent-yellow-soft: #fff0c2;
+  --color-accent-green-soft: #d2ecdd;
+
+  /* legacy aliases (map old names to the new pop palette) */
+  --color-accent-ink-blue: var(--color-accent-blue);
+  --color-accent-amber: var(--color-accent-yellow);
+  --color-accent-olive: var(--color-accent-green);
+  --color-accent-amber-soft: var(--color-accent-yellow-soft);
+  --color-accent-olive-soft: var(--color-accent-green-soft);
+
+  /* ---------- COLOR: FUNCTIONAL (vivid, semantic) ---------- */
+  --color-danger: #ee3a20;
+  --color-warning: #d98a00;
+  --color-success: #1f7a4d;
+  --color-info: #1e3ae6;
+
+  /* ---------- COLOR: BORDERS ---------- */
+  --color-border-strong: #1a1a1a;
+  --color-border-default: #cfc9bc;
+  --color-border-subtle: #e2ddd1;
+
+  /* ---------- TYPOGRAPHY: FAMILIES ---------- */
+  --font-sans: "Archivo", "Inter", "Helvetica Neue", Arial, sans-serif;      /* UI + body */
+  --font-heading: "Archivo", "Helvetica Neue", Arial, sans-serif;            /* heavy grotesque headlines (weight 800-900) */
+  --font-display: "Share Tech Mono", "Courier New", ui-monospace, monospace; /* skinny square monospace display (BIG BIRD) */
+  --font-mono: "Space Mono", "IBM Plex Mono", ui-monospace, monospace;       /* technical labels/lists */
+
+  /* ---------- TYPOGRAPHY: SIZE SCALE (contrast, no mid-range) ---------- */
+  --font-size-caption: 0.75rem;    /* 12px — metadata, labels */
+  --font-size-body-sm: 0.8125rem;  /* 13px */
+  --font-size-body: 0.9375rem;     /* 15px — default body */
+  --font-size-lead: 1.0625rem;     /* 17px — max for functional text */
+  /* jump — deliberately skip 20–44px for body use */
+  --font-size-display-sm: 3rem;    /* 48px */
+  --font-size-display-md: 4.5rem;  /* 72px */
+  --font-size-display-lg: 6.5rem;  /* 104px — hero gestural headers */
+
+  /* ---------- TYPOGRAPHY: WEIGHT ---------- */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --font-weight-heavy: 800;   /* grotesque headlines (CODE CRAFTED) */
+  --font-weight-black: 900;
+
+  /* ---------- TYPOGRAPHY: LINE HEIGHT ---------- */
+  --line-height-tight: 0.95;       /* display */
+  --line-height-snug: 1.2;
+  --line-height-body: 1.5;
+
+  /* ---------- TYPOGRAPHY: TRACKING ---------- */
+  --letter-spacing-tight: -0.02em; /* display */
+  --letter-spacing-normal: 0;
+  --letter-spacing-label: 0.08em;  /* uppercase labels */
+
+  /* ---------- SPACING SCALE (4px base) ---------- */
+  --space-0: 0;
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+  --space-24: 6rem;    /* 96px — macro margins / whitespace */
+  --space-32: 8rem;    /* 128px */
+
+  /* ---------- RADIUS (sharp by default) ---------- */
+  --radius-none: 0;
+  --radius-sm: 2px;    /* max for UI containers */
+  --radius-pill: 999px;/* reserved for tags/stamps only, rare */
+
+  /* ---------- BORDER WIDTH ---------- */
+  --border-width-hairline: 1px;
+  --border-width-default: 1.5px;
+  --border-width-heavy: 2px;
+
+  /* ---------- SHADOW / ELEVATION (soft, physical, low) ---------- */
+  --shadow-none: none;
+  --shadow-paper: 0 1px 2px rgba(26, 22, 18, 0.06);           /* resting */
+  --shadow-raised: 0 2px 12px rgba(26, 22, 18, 0.08);         /* card lifted off paper */
+  --shadow-object: 0 8px 28px rgba(26, 22, 18, 0.12);         /* real object (badge, print) */
+  --shadow-inset: inset 0 1px 3px rgba(26, 22, 18, 0.08);     /* sunken well */
+
+  /* ---------- MOTION: DURATION ---------- */
+  --duration-instant: 80ms;
+  --duration-fast: 160ms;
+  --duration-base: 240ms;
+  --duration-slow: 400ms;
+
+  /* ---------- MOTION: EASING ---------- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);      /* general UI */
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);   /* content settling in */
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ease-physical: cubic-bezier(0.34, 1.56, 0.64, 1); /* slight overshoot, tactile */
+
+  /* ---------- MOTION: EXPRESSIVE ---------- */
+  --rotate-scrap-sm: -1.5deg;      /* intentional "messy" tilt */
+  --rotate-scrap-md: 2.5deg;
+
+  /* ---------- LAYOUT: GRID & CONTAINER ---------- */
+  --container-max: 1200px;         /* max content width */
+  --container-narrow: 680px;       /* prose / single-column measure */
+  --grid-columns: 12;
+  --grid-gutter: var(--space-8);   /* 32px between columns */
+  --page-pad-inline: var(--space-6);  /* 24px — mobile page margin */
+  --page-pad-inline-md: var(--space-16); /* 64px — tablet+ */
+  --page-pad-inline-lg: var(--space-24); /* 96px — desktop */
+
+  /* ---------- LAYOUT: BREAKPOINTS (min-width) ---------- */
+  --bp-sm: 480px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+
+  /* ---------- Z-INDEX SCALE ---------- */
+  --z-base: 0;
+  --z-raised: 10;      /* tilted/overlapping cards */
+  --z-sticky: 100;     /* sticky nav */
+  --z-dropdown: 200;   /* menus, popovers */
+  --z-scrim: 300;      /* modal backdrop */
+  --z-modal: 310;      /* modal panel */
+  --z-toast: 400;      /* notifications */
+
+  /* ---------- OPACITY / STATE ---------- */
+  --opacity-disabled: 0.4;
+  --opacity-scrim: 0.4;
+
+  /* ---------- FLUID DISPLAY (responsive headings) ---------- */
+  --font-size-display-sm-fluid: clamp(2.25rem, 5vw, 3rem);    /* 36→48 */
+  --font-size-display-md-fluid: clamp(2.75rem, 8vw, 4.5rem);  /* 44→72 */
+  --font-size-display-lg-fluid: clamp(3.25rem, 11vw, 6.5rem); /* 52→104 */
+}
