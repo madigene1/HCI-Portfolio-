@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Building AI Web Applications — Madison Hobbs</title>
+<meta name="description" content="A semester of small, AI-assisted web apps — each one a focused experiment in building real, working software with AI as a collaborator." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=Share+Tech+Mono&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../design-system/tokens.css" />
+<style>
+  /* screen accent: ONE pop family per DESIGN.md */
+  :root { --accent: var(--color-accent-blue); --accent-soft: var(--color-accent-blue-soft); }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--color-bg-base); color: var(--color-ink-body); font-family: var(--font-sans); font-size: var(--font-size-body); line-height: var(--line-height-body); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+
+  .wrap { max-width: var(--container-max); margin: 0 auto; padding-inline: var(--page-pad-inline); }
+  @media (min-width: 768px) { .wrap { padding-inline: var(--page-pad-inline-md); } }
+  @media (min-width: 1024px) { .wrap { padding-inline: var(--page-pad-inline-lg); } }
+
+  .label { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); }
+  .skip { position: absolute; left: -999px; top: 0; background: var(--color-ink-strong); color: var(--color-ink-inverse); padding: var(--space-2) var(--space-4); z-index: var(--z-toast); }
+  .skip:focus { left: var(--space-4); }
+  :where(a, button, input, textarea):focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* NAV */
+  .nav { position: sticky; top: 0; z-index: var(--z-sticky); background: var(--color-bg-base); border-bottom: var(--border-width-hairline) solid var(--color-border-default); transition: box-shadow var(--duration-fast) var(--ease-standard); }
+  .nav.scrolled { box-shadow: var(--shadow-paper); }
+  .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { font-family: var(--font-display); font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-ink-strong); text-decoration: none; }
+  .nav__links { display: flex; align-items: center; gap: var(--space-6); list-style: none; }
+  .nav__links a { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); text-decoration: none; padding: var(--space-2) 0; border-bottom: 2px solid transparent; transition: color var(--duration-fast) var(--ease-standard); }
+  .nav__links a:hover { color: var(--color-ink-strong); }
+  .nav__links a.current { color: var(--color-ink-strong); border-bottom-color: var(--accent); }
+  .nav__toggle { display: none; width: 44px; height: 44px; background: none; border: none; cursor: pointer; align-items: center; justify-content: center; }
+  .nav__toggle span, .nav__toggle span::before, .nav__toggle span::after { content: ""; display: block; width: 22px; height: 2px; background: var(--color-ink-strong); position: relative; }
+  .nav__toggle span::before { position: absolute; top: -7px; }
+  .nav__toggle span::after { position: absolute; top: 7px; }
+  @media (max-width: 767px) {
+    .nav__toggle { display: inline-flex; }
+    .nav__links { position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; align-items: flex-start; gap: 0; background: var(--color-bg-base); border-bottom: var(--border-width-hairline) solid var(--color-border-default); padding: var(--space-2) var(--page-pad-inline) var(--space-4); box-shadow: var(--shadow-raised); display: none; }
+    .nav__links.open { display: flex; }
+    .nav__links a { width: 100%; padding: var(--space-3) 0; border-bottom: var(--border-width-hairline) solid var(--color-border-subtle); }
+  }
+
+  /* PROJECT HERO */
+  .p-hero { padding-block: var(--space-16) var(--space-12); }
+  .p-back { display: inline-block; margin-bottom: var(--space-6); font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--accent); text-decoration: none; }
+  .p-back:hover { text-decoration: underline; }
+  .p-hero h1 { font-family: var(--font-heading); font-weight: var(--font-weight-black); font-size: var(--font-size-display-md-fluid); line-height: 1.02; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-ink-strong); max-width: 18ch; margin-top: var(--space-2); }
+  .p-hero__sub { font-size: var(--font-size-lead); color: var(--color-ink-body); max-width: var(--container-narrow); margin-top: var(--space-6); }
+  .p-meta { display: flex; flex-wrap: wrap; gap: var(--space-8); margin-top: var(--space-8); }
+  .p-meta div { display: flex; flex-direction: column; gap: var(--space-1); }
+  .p-meta .k { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); }
+  .p-meta .v { font-size: var(--font-size-body-sm); font-weight: var(--font-weight-bold); color: var(--color-ink-strong); }
+  .p-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-6); }
+  .tag { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); border: var(--border-width-hairline) solid var(--color-border-default); padding: var(--space-1) var(--space-2); }
+
+  .p-cover { margin-top: var(--space-12); aspect-ratio: 16 / 9; background: var(--color-bg-sunken); border: var(--border-width-hairline) solid var(--color-border-default); box-shadow: var(--shadow-paper); overflow: hidden; }
+  .p-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ARTICLE / CASE STUDY BODY */
+  .article { max-width: var(--container-narrow); padding-block: var(--space-16) var(--space-24); }
+  .article h2 { font-family: var(--font-heading); font-weight: var(--font-weight-black); font-size: var(--font-size-display-sm-fluid); line-height: 1; text-transform: uppercase; letter-spacing: -0.01em; color: var(--color-ink-strong); margin: var(--space-16) 0 var(--space-4); }
+  .article > h2:first-child { margin-top: 0; }
+  .article h3 { font-size: var(--font-size-lead); font-weight: var(--font-weight-bold); color: var(--color-ink-strong); margin: var(--space-8) 0 var(--space-2); }
+  .article p { font-size: var(--font-size-body); color: var(--color-ink-body); }
+  .article p + p { margin-top: var(--space-4); }
+  .article ul, .article ol { margin: var(--space-4) 0; padding-left: var(--space-6); }
+  .article li { margin-bottom: var(--space-2); }
+  .article li strong { color: var(--color-ink-strong); font-weight: var(--font-weight-bold); }
+  .article blockquote { border-left: 2px solid var(--accent); padding-left: var(--space-4); margin: var(--space-8) 0; font-size: var(--font-size-lead); color: var(--color-ink-strong); }
+  .article figure { margin: var(--space-8) 0; }
+  .article figure img { width: 100%; border: var(--border-width-hairline) solid var(--color-border-subtle); }
+  .article figcaption { font-family: var(--font-mono); font-size: var(--font-size-caption); color: var(--color-ink-muted); margin-top: var(--space-2); }
+
+  /* CTA + FOOTER */
+  .p-cta { padding-block: var(--space-16); border-top: var(--border-width-hairline) solid var(--color-border-subtle); }
+  .btn { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; padding: var(--space-3) var(--space-6); font-family: var(--font-sans); font-size: var(--font-size-body); font-weight: var(--font-weight-medium); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); border: none; border-radius: var(--radius-none); cursor: pointer; text-decoration: none; transition: filter var(--duration-fast) var(--ease-standard), transform var(--duration-instant) var(--ease-standard); }
+  .btn--accent { background: var(--accent); color: #fff; }
+  .btn--accent:hover { filter: brightness(1.08); }
+  .btn:active { transform: translateY(1px); }
+
+  .footer { padding-block: var(--space-16); border-top: var(--border-width-hairline) solid var(--color-border-default); }
+  .footer__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6); }
+  .footer__links { display: flex; gap: var(--space-6); list-style: none; }
+  .footer__links a { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); text-decoration: none; }
+  .footer__links a:hover { color: var(--color-ink-strong); }
+  .footer__copy { font-family: var(--font-mono); font-size: var(--font-size-caption); color: var(--color-ink-faint); }
+
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a href="../index.html#top" class="brand">Madison Hobbs</a>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu"><span></span></button>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="../index.html#work" class="current">Work</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+  <article>
+    <section class="p-hero">
+      <div class="wrap">
+        <a href="../index.html#work" class="p-back">← Back to work</a>
+        <p class="label">Case Study · 2026</p>
+        <h1>Building AI Web Applications</h1>
+        <p class="p-hero__sub">A semester of small, AI-assisted web apps — each one a focused experiment in building real, working software with AI as a genuine build partner.</p>
+        <div class="p-meta">
+          <div><span class="k">Role</span><span class="v">Designer &amp; Developer</span></div>
+          <div><span class="k">Timeline</span><span class="v">2026</span></div>
+          <div><span class="k">Class</span><span class="v">AI Development</span></div>
+          <div><span class="k">Tools</span><span class="v">Figma, Cursor, Claude, GitHub</span></div>
+        </div>
+        <div class="p-tags"><span class="tag">Web Development</span><span class="tag">AI-Assisted</span><span class="tag">Prototyping</span></div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <figure class="p-cover"><img src="assets/cover.png" alt="Building AI Web Applications — cover" onerror="this.closest('.p-cover').remove()" /></figure>
+    </div>
+
+    <div class="wrap">
+      <div class="article">
+        <h2>Overview</h2>
+        <p>This collection is a record of five web apps I designed and built this semester using AI assisted development tools, each one a small, self contained problem used to practice a different piece of the same skill: going from an idea to a working, deployed application with AI as a genuine build partner. The throughline across every app is the same repeatable method — plan first, design a system, prompt deliberately, wire in real logic, then ship. By the end of the semester that method took me from a blank prompt to a live, functioning app in about a week.</p>
+
+        <h2>Problem</h2>
+        <p>The brief for the semester was to learn how to build functional web apps quickly using AI assisted tools, without relying on a traditional engineering background to get there. A single large project would not have taught that skill well. One project only tests one set of decisions once. A series of small, varied apps — a budgeting tool, a tracker, a household dashboard, a book discovery tool — forced me to reapply the same method in a fresh context every time, which is what actually builds fluency instead of memorizing one project's quirks.</p>
+
+        <h2>Approach</h2>
+        <p>The same method carried across every app, even as the apps themselves got more ambitious:</p>
+        <ul>
+          <li><strong>Plan the flows first.</strong> Before writing a single prompt, I defined the core user tasks and mapped the user flow and site structure for the app. Skipping this step early in the semester was the clearest cause of an app drifting structurally as it grew.</li>
+          <li><strong>Define a small design system.</strong> Starting in Week 4, every app got a lightweight component and token set — colors, type, spacing — before I asked for more screens. This is what kept an app visually consistent as I added features, instead of every new screen introducing its own styling.</li>
+          <li><strong>Prompt in Plan Mode, then switch to Agent Mode.</strong> I used Cursor's Plan Mode to review what the AI intended to build against my plan file before letting it execute in Agent Mode. Reviewing the plan first caught misunderstandings before they became code.</li>
+          <li><strong>Review before executing.</strong> Every generated change got a read through before I accepted it, especially once I started wiring in real data and logic.</li>
+          <li><strong>Wire real data and logic.</strong> Once the structure and system were solid, I connected real data — a public API, database tables, or stored state — and built out the loading, empty, success, and error states that a real user would actually hit.</li>
+          <li><strong>Commit and deploy.</strong> Every app ended the same way: committed with meaningful history where version control was in place, and published live on Netlify.</li>
+        </ul>
+
+        <h2>The Apps</h2>
+
+        <h3>BudgetIsland</h3>
+        <p>A spending tracker with a gamified twist. Set a monthly limit, log spending day to day, and a small visual island grows when you have a quiet, low spend day. All data stays on device. This was my first app of the semester, built with a single tool and no upfront planning, and the most interesting lesson was seeing how quickly a project without a plan starts making its own inconsistent decisions as it grows.</p>
+        <figure><img src="assets/budgetisland.png" alt="BudgetIsland — screen" onerror="this.closest('figure').remove()" /><figcaption>BudgetIsland — screen</figcaption></figure>
+
+        <h3>CoffeeTracker</h3>
+        <p>[Description pending — let me know what this app actually tracks and I will fill this in accurately]</p>
+        <figure><img src="assets/coffeetracker.png" alt="CoffeeTracker — screen" onerror="this.closest('figure').remove()" /><figcaption>CoffeeTracker — screen</figcaption></figure>
+
+        <h3>ChoreTracker</h3>
+        <p>A household chore dashboard for a shared home. Weekly task cards show the assignee, due date, and status, with room to attach a completion photo. I built this app twice. The first version came out of a two tool pipeline, starting the first user task in Figma Make, then downloading that code into Cursor to finish the rest. The second version was a full rebuild on top of a formal design system, following a six step process of analyzing a moodboard, defining principles, building design tokens, defining components, and writing it all into a DESIGN.md file. Rebuilding the same app instead of starting fresh made the value of a design system undeniable — the second version stayed consistent in a way the first one never quite did.</p>
+        <figure><img src="assets/choretracker.png" alt="ChoreTracker — screen" onerror="this.closest('figure').remove()" /><figcaption>ChoreTracker — screen</figcaption></figure>
+
+        <h3>ReadRoulette</h3>
+        <p>A book discovery tool that pulls live from the Open Library public API. Search by title, filter by genre, or spin a random bundle of books, then save titles for later. This app was where I built out real data states for the first time — loading, empty, success, and error — rather than assuming the happy path is the only one a user will see.</p>
+        <figure><img src="assets/readroulette.png" alt="ReadRoulette — screen" onerror="this.closest('figure').remove()" /><figcaption>ReadRoulette — screen</figcaption></figure>
+
+        <h2>Process</h2>
+        <p>Each app picked up where the last one left off. BudgetIsland taught me the basics of prompting with a single tool and no plan. CoffeeTracker added the discipline of mapping user flows and site structure before writing a single prompt. ChoreTracker's first version introduced a two tool workflow, moving between Figma Make and Cursor, and its second version added a real design system, which is the point where my apps stopped looking like separate one off experiments and started looking like they came from the same hand. ReadRoulette added live data and the states that come with it. The clearest trade off across the semester was speed against structure — moving fast without a plan felt faster in the moment, but it cost more time later fixing inconsistency than planning would have taken up front.</p>
+
+        <h2>Outcome</h2>
+        <p>Four small apps and one larger course project, all deployed and live, each demonstrating a distinct piece of the AI assisted build pipeline: prompting fundamentals, user flow driven planning, a Figma Make to Cursor workflow, formal design systems, live API integration and data states, and version controlled deployment. Taken together, the body of work shows I can carry a product from an idea through a working, systemized, deployed application, using AI as the primary build tool rather than a drafting aid.</p>
+
+        <h2>Reflection</h2>
+        <p>The biggest thing I learned is that a design system is not a finishing touch — it is infrastructure that needs to exist before a project scales past its first few screens. Rebuilding ChoreTracker in Week 4 proved that in a way reading about design systems never could. If I started the semester over, I would build a lightweight design system on day one, even for something as small as BudgetIsland. More broadly, this semester changed how I see my own role. I came in thinking of myself as a researcher and service designer who hands off direction to engineers. I am leaving it able to carry a product from research and user flows through to a deployed, working application, which changes the kind of conversation I can have with an engineering team from the very start.</p>
+      </div>
+    </div>
+  </article>
+
+  <section class="p-cta">
+    <div class="wrap">
+      <a href="../index.html#contact" class="btn btn--accent">Get in touch</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <a href="../index.html#top" class="brand">Madison Hobbs</a>
+    <ul class="footer__links">
+      <li><a href="../index.html#work">Work</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <span class="footer__copy">© 2026 · Madison Hobbs</span>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const toggle = document.querySelector('.nav__toggle');
+  const links = document.getElementById('nav-links');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 8); }, { passive: true });
+  toggle.addEventListener('click', () => { const open = links.classList.toggle('open'); toggle.setAttribute('aria-expanded', String(open)); });
+  links.addEventListener('click', (e) => { if (e.target.tagName === 'A') { links.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); } });
+</script>
+</body>
+</html>
