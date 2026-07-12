@@ -103,7 +103,7 @@
 
   .hero__trust { display: flex; align-items: center; gap: var(--space-3); max-width: 360px; text-align: left; }
   .hero__avatars { display: inline-flex; flex-shrink: 0; }
-  .hero__avatars span { width: 32px; height: 32px; border-radius: var(--radius-pill); background: var(--accent-soft); border: var(--border-width-default) solid var(--color-bg-base); margin-left: -8px; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; }
+  .hero__avatars span { width: 32px; height: 32px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--color-accent-blue-soft) 68%, white); border: var(--border-width-default) solid var(--color-bg-base); margin-left: -8px; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; }
   .hero__avatars span:first-child { margin-left: 0; }
   .hero__avatars img { width: 72%; height: 72%; object-fit: contain; display: block; }
   .hero__trust p { font-size: var(--font-size-body-sm); color: var(--color-ink-muted); }
@@ -148,6 +148,17 @@
   .section__head h2 { font-family: var(--font-heading); font-weight: var(--font-weight-black); font-size: var(--font-size-display-sm-fluid); line-height: 1; text-transform: uppercase; letter-spacing: -0.01em; color: var(--color-ink-strong); }
 
   /* =================== PROJECTS (2-col) =================== */
+  .projects-groups { display: flex; flex-direction: column; gap: var(--space-16); }
+  .projects-group__head { margin-bottom: var(--space-8); }
+  .projects-group__head h3 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-black);
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--color-ink-muted);
+  }
   .projects { display: grid; grid-template-columns: 1fr; gap: var(--space-8); }
   @media (min-width: 768px) { .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .project { display: flex; flex-direction: column; background: var(--color-bg-raised); border: var(--border-width-hairline) solid var(--color-border-subtle); box-shadow: var(--shadow-paper); padding: var(--space-6); text-decoration: none; color: inherit; transition: box-shadow var(--duration-base) var(--ease-entrance), transform var(--duration-base) var(--ease-entrance); }
@@ -215,6 +226,13 @@
   .exp__years { font-family: var(--font-mono); font-size: var(--font-size-body-sm); color: var(--color-ink-muted); white-space: nowrap; }
   @media (min-width: 768px) { .exp__years { text-align: right; } }
   .exp__years .arrow { color: var(--accent); margin: 0 var(--space-1); }
+
+  /* ---- values ---- */
+  .values { margin-top: var(--space-12); }
+  .values > .label { display: block; margin-bottom: var(--space-4); }
+  .values__list { list-style: none; display: flex; flex-direction: column; gap: var(--space-4); }
+  .values__list li { padding-left: var(--space-6); position: relative; font-size: var(--font-size-body); font-weight: var(--font-weight-bold); color: var(--color-ink-strong); }
+  .values__list li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 10px; height: var(--border-width-heavy); background: var(--accent); }
 
   /* =================== CONTACT =================== */
   .contact__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-12); }
@@ -316,42 +334,60 @@
         <span class="label">01 — Selected</span>
         <h2 id="work-title">Featured Projects</h2>
       </div>
-      <div class="projects">
+      <div class="projects-groups">
 
-        <a class="project" href="Scout/index.html" aria-label="Scout — open project">
-          <div class="project__thumb"><img src="Scout/assets/Scout.png" alt="Scout project preview" /></div>
-          <div class="project__row"><span class="label">2026 · Web app</span></div>
-          <h3 class="project__title">Scout</h3>
-          <p class="project__desc">A mobile-first web app that turns the deadline-driven national park permit process into a guided flow with proactive reminders.</p>
-          <div class="project__tags"><span class="tag">Web Development</span><span class="tag">Design</span><span class="tag">Prototyping</span></div>
-          <span class="project__more">View project →</span>
-        </a>
+        <div class="projects-group">
+          <div class="projects-group__head">
+            <h3 id="graduate-projects">Graduate Projects</h3>
+          </div>
+          <div class="projects">
 
-        <div class="project project--soon" aria-label="Building AI Web Applications — coming soon">
-          <div class="project__thumb"><span class="project__soon-label">Coming soon…</span></div>
-          <div class="project__row"><span class="label">2026 · Web apps</span></div>
-          <h3 class="project__title">Project title</h3>
-          <p class="project__desc">A semester of small, AI-assisted web apps — each one a focused experiment in building real, working software with AI as a build partner.</p>
-          <div class="project__tags"><span class="tag">Web Development</span><span class="tag">AI-Assisted</span><span class="tag">Prototyping</span></div>
-          <span class="project__more">Coming soon…</span>
+            <a class="project" href="Scout/index.html" aria-label="Scout — open project">
+              <div class="project__thumb"><img src="Scout/assets/Scout.png" alt="Scout project preview" /></div>
+              <div class="project__row"><span class="label">2026 · Web app · Iowa State University</span></div>
+              <h4 class="project__title">Scout</h4>
+              <p class="project__desc">A mobile-first web app that turns the deadline-driven national park permit process into a guided flow with proactive reminders.</p>
+              <div class="project__tags"><span class="tag">Web Development</span><span class="tag">Design</span><span class="tag">Prototyping</span></div>
+              <span class="project__more">View project →</span>
+            </a>
+
+            <div class="project project--soon" aria-label="Building AI Web Applications — coming soon">
+              <div class="project__thumb"><span class="project__soon-label">Coming soon…</span></div>
+              <div class="project__row"><span class="label">2026 · Web apps</span></div>
+              <h4 class="project__title">Project title</h4>
+              <p class="project__desc">A semester of small, AI-assisted web apps — each one a focused experiment in building real, working software with AI as a build partner.</p>
+              <div class="project__tags"><span class="tag">Web Development</span><span class="tag">AI-Assisted</span><span class="tag">Prototyping</span></div>
+              <span class="project__more">Coming soon…</span>
+            </div>
+
+          </div>
         </div>
 
-        <div class="project project--soon" aria-label="Web Design — coming soon">
-          <div class="project__thumb"><span class="project__soon-label">Coming soon…</span></div>
-          <div class="project__row"><span class="label label--strong">Web Design</span></div>
-          <h3 class="project__title">Project title</h3>
-          <p class="project__desc">A short description of this project will go here.</p>
-          <div class="project__tags"><span class="tag">Tag</span><span class="tag">Tag</span><span class="tag">Tag</span></div>
-          <span class="project__more">Coming soon…</span>
-        </div>
+        <div class="projects-group">
+          <div class="projects-group__head">
+            <h3 id="professional-work">Professional Work</h3>
+          </div>
+          <div class="projects">
 
-        <div class="project project--soon" aria-label="Prototype — coming soon">
-          <div class="project__thumb"><span class="project__soon-label">Coming soon…</span></div>
-          <div class="project__row"><span class="label label--strong">Prototype</span></div>
-          <h3 class="project__title">Project title</h3>
-          <p class="project__desc">A short description of this project will go here.</p>
-          <div class="project__tags"><span class="tag">Tag</span><span class="tag">Tag</span><span class="tag">Tag</span></div>
-          <span class="project__more">Coming soon…</span>
+            <a class="project" href="VRWearableBenchmarking/index.html" aria-label="VR &amp; Wearable Benchmarking Studies — open project">
+              <div class="project__thumb"><img src="VRWearableBenchmarking/assets/Coverphoto.jpg" alt="VR and wearable benchmarking studies preview" /></div>
+              <div class="project__row"><span class="label">2024 · Lead UX Researcher · Blink UX Research and Design</span></div>
+              <h4 class="project__title">VR &amp; Wearable Benchmarking Studies</h4>
+              <p class="project__desc">Five in-person benchmarking studies on VR headsets and wearables for a Fortune 500 client — 250+ sessions moderated, Issues Lists delivered at the C-suite level.</p>
+              <div class="project__tags"><span class="tag">Benchmarking</span><span class="tag">Qualitative Research</span><span class="tag">VR</span></div>
+              <span class="project__more">View project →</span>
+            </a>
+
+            <div class="project project--soon" aria-label="Prototype — coming soon">
+              <div class="project__thumb"><span class="project__soon-label">Coming soon…</span></div>
+              <div class="project__row"><span class="label label--strong">Prototype</span></div>
+              <h4 class="project__title">Project title</h4>
+              <p class="project__desc">A short description of this project will go here.</p>
+              <div class="project__tags"><span class="tag">Tag</span><span class="tag">Tag</span><span class="tag">Tag</span></div>
+              <span class="project__more">Coming soon…</span>
+            </div>
+
+          </div>
         </div>
 
       </div>
@@ -427,6 +463,15 @@
                 <span class="exp__org">Keala Pono</span>
                 <span class="exp__years">2022 <span class="arrow" aria-hidden="true">→</span> 2023</span>
               </li>
+            </ul>
+          </div>
+
+          <div class="values" aria-labelledby="values-title">
+            <span class="label" id="values-title">Values</span>
+            <ul class="values__list">
+              <li>Trust &amp; Teamwork</li>
+              <li>Authenticity</li>
+              <li>Curiosity and Continuous learning</li>
             </ul>
           </div>
         </div>

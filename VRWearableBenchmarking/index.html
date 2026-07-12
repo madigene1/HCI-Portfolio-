@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VR &amp; Wearable Benchmarking Studies · Case Study</title>
+<meta name="description" content="Case study: Five in-person benchmarking studies on VR headsets and wearable technology for a Fortune 500 client — 250+ sessions moderated, Issues Lists delivered at the C-suite level." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=Share+Tech+Mono&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../design-system/tokens.css" />
+<style>
+  /* ---- screen accent: ONE pop family per DESIGN.md (green) ---- */
+  :root { --accent: var(--color-accent-green); --accent-soft: var(--color-accent-green-soft); }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--color-bg-base);
+    color: var(--color-ink-body);
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding-inline: var(--page-pad-inline);
+  }
+  @media (min-width: 768px) { .wrap { padding-inline: var(--page-pad-inline-md); } }
+  @media (min-width: 1024px) { .wrap { padding-inline: var(--page-pad-inline-lg); } }
+
+  .label { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); }
+
+  .skip { position: absolute; left: -999px; top: 0; background: var(--color-ink-strong); color: var(--color-ink-inverse); padding: var(--space-2) var(--space-4); z-index: var(--z-toast); }
+  .skip:focus { left: var(--space-4); }
+
+  :where(a, button, input, textarea):focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* =================== NAVBAR =================== */
+  .nav { position: sticky; top: 0; z-index: var(--z-sticky); background: var(--color-bg-base); border-bottom: var(--border-width-hairline) solid var(--color-border-default); transition: box-shadow var(--duration-fast) var(--ease-standard); }
+  .nav.scrolled { box-shadow: var(--shadow-paper); }
+  .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { font-family: var(--font-display); font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-ink-strong); text-decoration: none; }
+  .nav__links { display: flex; align-items: center; gap: var(--space-6); list-style: none; }
+  .nav__links a { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); text-decoration: none; padding: var(--space-2) 0; border-bottom: 2px solid transparent; transition: color var(--duration-fast) var(--ease-standard); }
+  .nav__links a:hover { color: var(--color-ink-strong); }
+  .nav__links a.current { color: var(--color-ink-strong); border-bottom-color: var(--accent); }
+  .nav__toggle { display: none; width: 44px; height: 44px; background: none; border: none; cursor: pointer; align-items: center; justify-content: center; }
+  .nav__toggle span, .nav__toggle span::before, .nav__toggle span::after { content: ""; display: block; width: 22px; height: 2px; background: var(--color-ink-strong); position: relative; transition: transform var(--duration-fast) var(--ease-standard); }
+  .nav__toggle span::before { position: absolute; top: -7px; }
+  .nav__toggle span::after { position: absolute; top: 7px; }
+
+  @media (max-width: 767px) {
+    .nav__toggle { display: inline-flex; }
+    .nav__links { position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; align-items: flex-start; gap: 0; background: var(--color-bg-base); border-bottom: var(--border-width-hairline) solid var(--color-border-default); padding: var(--space-2) var(--page-pad-inline) var(--space-4); box-shadow: var(--shadow-raised); display: none; }
+    .nav__links.open { display: flex; }
+    .nav__links a { width: 100%; padding: var(--space-3) 0; border-bottom: var(--border-width-hairline) solid var(--color-border-subtle); }
+    .nav__links a.current { border-bottom-color: var(--color-border-subtle); color: var(--accent); }
+  }
+
+  /* =================== BUTTONS =================== */
+  .btn { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; padding: var(--space-3) var(--space-6); font-family: var(--font-sans); font-size: var(--font-size-body); font-weight: var(--font-weight-medium); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); border: none; border-radius: var(--radius-none); cursor: pointer; text-decoration: none; transition: background var(--duration-fast) var(--ease-standard), filter var(--duration-fast) var(--ease-standard), transform var(--duration-instant) var(--ease-standard); }
+  .btn--primary { background: var(--color-bg-inverse); color: var(--color-ink-inverse); }
+  .btn--primary:hover { background: #333; }
+  .btn--accent { background: var(--accent); color: #fff; }
+  .btn--accent:hover { filter: brightness(1.08); }
+  .btn--secondary { background: transparent; color: var(--color-ink-strong); border: var(--border-width-default) solid var(--color-border-strong); }
+  .btn--secondary:hover { background: var(--color-bg-sunken); }
+  .btn:active { transform: translateY(1px); }
+
+  /* =================== CASE STUDY HERO =================== */
+  .cs-hero { padding-block: var(--space-16) var(--space-12); border-bottom: var(--border-width-hairline) solid var(--color-border-subtle); }
+  .cs-back { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); text-decoration: none; margin-bottom: var(--space-8); }
+  .cs-back:hover { color: var(--color-ink-strong); }
+  .cs-hero__eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6); }
+  .cs-hero h1 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-black);
+    font-size: var(--font-size-display-md-fluid);
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--color-ink-strong);
+    max-width: 18ch;
+  }
+  .cs-hero__lede { font-size: var(--font-size-lead); color: var(--color-ink-body); max-width: var(--container-narrow); margin-top: var(--space-6); }
+
+  /* meta strip */
+  .cs-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6) var(--space-8); margin-top: var(--space-12); border-top: var(--border-width-hairline) solid var(--color-border-subtle); padding-top: var(--space-8); }
+  @media (min-width: 768px) { .cs-meta { grid-template-columns: repeat(4, 1fr); } }
+  .cs-meta__k { display: block; margin-bottom: var(--space-2); }
+  .cs-meta__v { font-size: var(--font-size-body-sm); font-weight: var(--font-weight-bold); color: var(--color-ink-strong); }
+
+  .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .tag { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); border: var(--border-width-hairline) solid var(--color-border-default); padding: var(--space-1) var(--space-2); }
+  .pill { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-inverse); background: var(--color-bg-inverse); padding: var(--space-1) var(--space-3); }
+
+  /* =================== COVER =================== */
+  .cover { position: relative; margin-top: var(--space-12); overflow: hidden; }
+  .cover:not(:has(img)) { aspect-ratio: 16 / 9; background: var(--color-bg-sunken); border: var(--border-width-hairline) solid var(--color-border-default); }
+  .cover img { display: block; width: 100%; height: auto; }
+  .cover__ph { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-3); color: var(--color-ink-faint); aspect-ratio: 16 / 9; padding: var(--space-8); text-align: center; font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); }
+
+  /* stats row */
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-top: var(--space-8); }
+  @media (min-width: 640px) { .stats { grid-template-columns: repeat(3, 1fr); } }
+  .stat { background: var(--color-bg-raised); border: var(--border-width-hairline) solid var(--color-border-subtle); box-shadow: var(--shadow-paper); padding: var(--space-6); }
+  .stat__num { font-family: var(--font-heading); font-weight: var(--font-weight-black); font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1; color: var(--accent); display: block; margin-bottom: var(--space-2); }
+  .stat__label { font-size: var(--font-size-body-sm); color: var(--color-ink-body); }
+
+  /* =================== SECTIONS =================== */
+  .cs-section { padding-block: var(--space-12); border-bottom: var(--border-width-hairline) solid var(--color-border-subtle); }
+  .cs-section:last-of-type { border-bottom: none; }
+  .cs-section__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-8); }
+  @media (min-width: 1024px) { .cs-section__grid { grid-template-columns: 220px 1fr; gap: var(--space-16); align-items: start; } }
+  .cs-section__head { position: sticky; top: 96px; }
+  @media (max-width: 1023px) { .cs-section__head { position: static; } }
+  .cs-section__num { font-family: var(--font-mono); font-size: var(--font-size-caption); letter-spacing: var(--letter-spacing-label); color: var(--accent); display: block; margin-bottom: var(--space-2); }
+  .cs-section__head h2 { font-family: var(--font-heading); font-weight: var(--font-weight-black); font-size: clamp(1.375rem, 2.2vw, 1.75rem); line-height: 1.05; text-transform: uppercase; letter-spacing: -0.02em; color: var(--color-ink-strong); }
+
+  .prose { max-width: var(--container-narrow); }
+  .prose > p { font-size: var(--font-size-lead); color: var(--color-ink-body); }
+  .prose > p + p { margin-top: var(--space-4); }
+  .prose > ul + p { margin-top: var(--space-6); }
+  .prose h3 { font-size: var(--font-size-lead); font-weight: var(--font-weight-bold); color: var(--color-ink-strong); margin-top: var(--space-12); margin-bottom: var(--space-4); }
+  .prose > p + h3 { margin-top: var(--space-12); }
+  .prose > ul + h3 { margin-top: var(--space-12); }
+
+  .flist { list-style: none; margin-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
+  .flist li { padding-left: var(--space-6); position: relative; font-size: var(--font-size-body); color: var(--color-ink-body); }
+  .flist li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 10px; height: var(--border-width-heavy); background: var(--accent); }
+  .flist li strong { color: var(--color-ink-strong); font-weight: var(--font-weight-bold); }
+
+  .callout { margin-top: var(--space-8); background: var(--color-bg-inverse); color: var(--color-ink-inverse); padding: var(--space-8); }
+  .callout .label { color: var(--color-ink-inverse); opacity: 0.7; display: block; margin-bottom: var(--space-3); }
+  .callout p { font-size: var(--font-size-lead); }
+
+  .pullquote { margin-top: var(--space-8); padding-left: var(--space-6); border-left: var(--border-width-heavy) solid var(--accent); }
+  .pullquote p { font-family: var(--font-heading); font-weight: var(--font-weight-heavy); font-size: var(--font-size-lead); color: var(--color-ink-strong); text-transform: none; }
+
+  /* =================== NEXT / FOOTER =================== */
+  .cs-next { padding-block: var(--space-24); text-align: center; }
+  .cs-next__eyebrow { display: block; color: var(--accent); margin-bottom: var(--space-3); }
+  .cs-next h2 { font-family: var(--font-heading); font-weight: var(--font-weight-black); font-size: var(--font-size-display-sm-fluid); line-height: 0.95; text-transform: uppercase; letter-spacing: -0.01em; color: var(--color-ink-strong); margin-bottom: var(--space-4); }
+  .cs-next__desc { font-size: var(--font-size-lead); color: var(--color-ink-body); max-width: var(--container-narrow); margin: 0 auto var(--space-8); }
+  .cs-next__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center; }
+
+  .footer { padding-block: var(--space-16); border-top: var(--border-width-hairline) solid var(--color-border-subtle); }
+  .footer__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6); }
+  .footer__links { display: flex; gap: var(--space-6); list-style: none; }
+  .footer__links a { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); text-decoration: none; }
+  .footer__links a:hover { color: var(--color-ink-strong); }
+  .footer__copy { font-family: var(--font-mono); font-size: var(--font-size-caption); color: var(--color-ink-faint); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a href="../index.html#top" class="brand">Madison Hobbs, M.S.</a>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu"><span></span></button>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="../index.html#work" class="current">Work</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+  <section class="cs-hero" aria-labelledby="cs-title">
+    <div class="wrap">
+      <a href="../index.html#professional-work" class="cs-back">← Back to work</a>
+      <div class="cs-hero__eyebrow">
+        <span class="pill">Case Study</span>
+        <div class="tags">
+          <span class="tag">Benchmarking</span>
+          <span class="tag">Qualitative Research</span>
+          <span class="tag">VR</span>
+          <span class="tag">Hardware</span>
+        </div>
+      </div>
+      <h1 id="cs-title">VR &amp; Wearable Benchmarking Studies</h1>
+      <p class="cs-hero__lede">Five in-person benchmarking studies for a Fortune 500 client — setting the standard for how future wearable and multi-modal AI products are measured.</p>
+
+      <dl class="cs-meta">
+        <div>
+          <dt class="label cs-meta__k">Role</dt>
+          <dd class="cs-meta__v">UX Researcher</dd>
+        </div>
+        <div>
+          <dt class="label cs-meta__k">Timeline</dt>
+          <dd class="cs-meta__v">May–Nov 2024</dd>
+        </div>
+        <div>
+          <dt class="label cs-meta__k">Employer</dt>
+          <dd class="cs-meta__v">Blink UX</dd>
+        </div>
+        <div>
+          <dt class="label cs-meta__k">Tools</dt>
+          <dd class="cs-meta__v">Qualtrics, Miro, FigJam, Slack, Coda, Zoom, Excel</dd>
+        </div>
+      </dl>
+
+      <figure class="cover">
+        <img src="assets/cover.png" alt="VR and wearable benchmarking studies — cover" onerror="this.remove(); this.parentElement.classList.add('cover--empty')" />
+        <figcaption class="cover__ph" hidden>Cover image — add assets/cover.png</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="s-overview">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">01</span><h2 id="s-overview">Overview</h2></div>
+      <div class="prose">
+        <p>As a UX Researcher at Blink UX, I conducted five in-person benchmarking studies on virtual reality headsets and wearable technology for a Fortune 500 client. The work established a repeatable standard for measuring benchmarking metrics in future studies, while qualitative analysis of participant behavior and responses surfaced pain points that informed design recommendations delivered at the executive level.</p>
+        <div class="pullquote">
+          <p>Studies uncovered opportunity areas through quantitative metrics — satisfaction, frustration, and confidence — and qualitative responses, delivered through final decks and prioritized Issues Lists.</p>
+        </div>
+        <div class="stats" aria-label="Key metrics">
+          <div class="stat">
+            <span class="stat__num">250+</span>
+            <span class="stat__label">Sessions I moderated across 5 studies</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num">80</span>
+            <span class="stat__label">Complete datasets collected per study</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num">50K</span>
+            <span class="stat__label">Data points synthesized per study</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="s-context">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">02</span><h2 id="s-context">Context &amp; Goals</h2></div>
+      <div class="prose">
+        <p>The client needed a rigorous, repeatable way to benchmark wearable and VR products against one another and track improvements over time. Our team was asked to:</p>
+        <ul class="flist">
+          <li>Create and run benchmarking studies that could serve as the template for future research</li>
+          <li>Collect consistent quantitative metrics (time on task, confidence, success, satisfaction, frustration) alongside rich qualitative data</li>
+          <li>Compare products across both non-experienced and experienced participants</li>
+          <li>Deliver actionable insights — not just scores — that product teams could act on immediately</li>
+        </ul>
+        <p>Each study produced approximately 80 complete datasets and ~50,000 data points, giving the client a substantial evidence base for product decisions.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="s-role">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">03</span><h2 id="s-role">My Role</h2></div>
+      <div class="prose">
+        <ul class="flist">
+          <li><strong>Moderated 250+ in-person sessions</strong> in Blink UX labs — welcoming participants, maintaining lab procedures, troubleshooting devices, and ensuring complete datasets even when hardware issues arose mid-session</li>
+          <li><strong>Facilitated team collaboration</strong> through Miro boards and structured team synchs to surface common themes and pain points across sessions</li>
+          <li><strong>Led qualitative synthesis</strong> — tagging themes and friction points across ~50,000 data points per study, moderator notes, and session observations</li>
+          <li><strong>Drove Issues List deliverables end-to-end</strong> — detailed documents capturing pain points, bugs, and prioritized recommendations, with timestamped video examples tied to specific session interactions. Delivered at the C-suite level.</li>
+          <li><strong>Onboarded new moderators</strong> with a comprehensive training guide and deck covering study content, expectations, and data-collection consistency — now used as a standard across other Blink UX projects</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="s-process">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">04</span><h2 id="s-process">Process</h2></div>
+      <div class="prose">
+        <h3>Planning &amp; moderation</h3>
+        <p>As a team, we created and tested a Qualtrics survey per study to serve as both moderation guide and data collection tool. Sessions were in-person and moderated: participants completed structured tasks, then answered benchmarking follow-ups. As a moderator, I stayed detail-oriented on data consistency, practiced neutral facilitation while remaining engaging, and built rapport in a welcoming lab environment. When devices needed troubleshooting, I stayed agile to protect dataset completeness.</p>
+
+        <h3>Affinity mapping &amp; collaboration</h3>
+        <p>I built Miro boards for collaborative deep-dives on session findings and encouraged team synchs with interactive activities to organize thoughts and recommendations. Throughout all five studies, the team communicated timeline goals, insights, and concerns through Slack to stay aligned.</p>
+
+        <h3>Data synthesis &amp; deliverables</h3>
+        <p>After data collection, I led qualitative synthesis — working through moderator notes and observations to tag themes and friction points. I owned the Issues List initiative per study: friction points, bugs, recommendations, and timestamped video clips showing participants experiencing each issue. We paired these with final decks and benchmarking score cards that told the story of participant needs and product performance.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="s-constraints">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">05</span><h2 id="s-constraints">Constraints</h2></div>
+      <div class="prose">
+        <ul class="flist">
+          <li><strong>Leadership changes:</strong> The team went through multiple leadership and role shifts mid-project. I stepped up within the reporting process, taking ownership of qualitative analysis and client-facing recommendations when deliverable ownership needed to shift.</li>
+          <li><strong>Timeline changes:</strong> Contract and recruitment constraints forced timeline adjustments. The team adapted through recruiter outreach and open communication, keeping studies on track without sacrificing data quality.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="s-outcome">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">06</span><h2 id="s-outcome">Outcome</h2></div>
+      <div class="prose">
+        <p>Across five studies, the Blink UX team conducted 500+ moderated sessions and delivered five final decks with benchmarking score cards. I personally drove Issues List initiatives delivered at the C-suite level, enabling user-centered product decisions on wearable and multi-modal AI experiences.</p>
+        <div class="callout">
+          <span class="label">Lasting impact</span>
+          <p>The benchmarking framework and moderator training materials established standards now reused across other Blink UX projects.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="s-reflection">
+    <div class="wrap cs-section__grid">
+      <div class="cs-section__head"><span class="cs-section__num">07</span><h2 id="s-reflection">Reflection</h2></div>
+      <div class="prose">
+        <p>This project reinforced that rigorous data collection and warm participant facilitation are not opposing goals — consistency in the lab and rapport with participants both protect data quality. Stepping into qualitative synthesis and executive-level deliverables under shifting team conditions taught me to own outcomes, not just tasks. If I were to extend this work, I'd push earlier alignment on cross-study metric definitions so longitudinal comparisons are even cleaner from study one.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-next">
+    <div class="wrap">
+      <span class="cs-next__eyebrow label">More work</span>
+      <h2>Scout</h2>
+      <p class="cs-next__desc">A web app that turns the deadline-driven national park permit process into a guided flow with proactive reminders.</p>
+      <div class="cs-next__actions">
+        <a href="../Scout/index.html" class="btn btn--accent">View Scout case study →</a>
+        <a href="../index.html#work" class="btn btn--secondary">Back to all projects</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <a href="../index.html#top" class="brand">Madison Hobbs, M.S.</a>
+    <ul class="footer__links">
+      <li><a href="../index.html#work">Work</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <span class="footer__copy">© 2026 · Madison Hobbs, M.S.</span>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const toggle = document.querySelector('.nav__toggle');
+  const links = document.getElementById('nav-links');
+
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  links.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>
+</body>
+</html>

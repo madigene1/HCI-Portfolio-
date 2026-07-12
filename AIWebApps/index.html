@@ -48,7 +48,7 @@
   }
 
   /* PROJECT HERO */
-  .p-hero { padding-block: var(--space-16) var(--space-12); }
+  .p-hero { padding-block: var(--space-16) var(--space-4); }
   .p-back { display: inline-block; margin-bottom: var(--space-6); font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--accent); text-decoration: none; }
   .p-back:hover { text-decoration: underline; }
   .p-hero h1 { font-family: var(--font-heading); font-weight: var(--font-weight-black); font-size: var(--font-size-display-md-fluid); line-height: 1.02; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-ink-strong); max-width: 18ch; margin-top: var(--space-2); }
@@ -60,23 +60,42 @@
   .p-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-6); }
   .tag { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); border: var(--border-width-hairline) solid var(--color-border-default); padding: var(--space-1) var(--space-2); }
 
+  .p-moodboard { margin: 0 0 var(--space-8); max-width: var(--container-narrow); }
+  .p-moodboard img { width: 100%; border: none; display: block; }
+  .p-moodboard figcaption { font-family: var(--font-mono); font-size: var(--font-size-caption); color: var(--color-ink-muted); margin-top: var(--space-2); }
+
   .p-cover { margin-top: var(--space-12); aspect-ratio: 16 / 9; background: var(--color-bg-sunken); border: var(--border-width-hairline) solid var(--color-border-default); box-shadow: var(--shadow-paper); overflow: hidden; }
   .p-cover img { width: 100%; height: 100%; object-fit: cover; }
 
-  /* ARTICLE / CASE STUDY BODY */
-  .article { max-width: var(--container-narrow); padding-block: var(--space-16) var(--space-24); }
-  .article h2 { font-family: var(--font-heading); font-weight: var(--font-weight-black); font-size: var(--font-size-display-sm-fluid); line-height: 1; text-transform: uppercase; letter-spacing: -0.01em; color: var(--color-ink-strong); margin: var(--space-16) 0 var(--space-4); }
-  .article > h2:first-child { margin-top: 0; }
-  .article h3 { font-size: var(--font-size-lead); font-weight: var(--font-weight-bold); color: var(--color-ink-strong); margin: var(--space-8) 0 var(--space-2); }
-  .article p { font-size: var(--font-size-body); color: var(--color-ink-body); }
-  .article p + p { margin-top: var(--space-4); }
-  .article ul, .article ol { margin: var(--space-4) 0; padding-left: var(--space-6); }
-  .article li { margin-bottom: var(--space-2); }
-  .article li strong { color: var(--color-ink-strong); font-weight: var(--font-weight-bold); }
-  .article blockquote { border-left: 2px solid var(--accent); padding-left: var(--space-4); margin: var(--space-8) 0; font-size: var(--font-size-lead); color: var(--color-ink-strong); }
-  .article figure { margin: var(--space-8) 0; }
-  .article figure img { width: 100%; border: var(--border-width-hairline) solid var(--color-border-subtle); }
-  .article figcaption { font-family: var(--font-mono); font-size: var(--font-size-caption); color: var(--color-ink-muted); margin-top: var(--space-2); }
+  /* SECTIONS (match Scout) */
+  .cs-section { padding-block: var(--space-12); border-bottom: var(--border-width-hairline) solid var(--color-border-subtle); }
+  .cs-section:last-of-type { border-bottom: none; }
+  .cs-section__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-8); }
+  @media (min-width: 1024px) { .cs-section__grid { grid-template-columns: 220px 1fr; gap: var(--space-16); align-items: start; } }
+  .cs-section__head { position: sticky; top: 96px; }
+  @media (max-width: 1023px) { .cs-section__head { position: static; } }
+  .cs-section__num { font-family: var(--font-mono); font-size: var(--font-size-caption); letter-spacing: var(--letter-spacing-label); color: var(--accent); display: block; margin-bottom: var(--space-2); }
+  .cs-section__head h2 { font-family: var(--font-heading); font-weight: var(--font-weight-black); font-size: clamp(1.375rem, 2.2vw, 1.75rem); line-height: 1.05; text-transform: uppercase; letter-spacing: -0.02em; color: var(--color-ink-strong); white-space: nowrap; }
+
+  .prose { max-width: var(--container-narrow); }
+  .prose > p { font-size: var(--font-size-lead); color: var(--color-ink-body); }
+  .prose > p + p { margin-top: var(--space-4); }
+  .prose > ul + p { margin-top: var(--space-6); }
+  .prose h3 { font-size: var(--font-size-lead); font-weight: var(--font-weight-bold); color: var(--color-ink-strong); margin-top: var(--space-12); margin-bottom: var(--space-4); }
+  .prose > h3:first-child { margin-top: 0; }
+  .prose > p + h3 { margin-top: var(--space-12); }
+  .prose > ul + h3 { margin-top: var(--space-12); }
+  .prose > .app-screens + h3 { margin-top: var(--space-12); }
+
+  .flist { list-style: none; margin-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
+  .flist li { padding-left: var(--space-6); position: relative; font-size: var(--font-size-body); color: var(--color-ink-body); }
+  .flist li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 10px; height: var(--border-width-heavy); background: var(--accent); }
+  .flist li strong { color: var(--color-ink-strong); font-weight: var(--font-weight-bold); }
+
+  .app-screens { display: grid; grid-template-columns: 1fr; gap: var(--space-4); margin: var(--space-6) 0 var(--space-8); }
+  @media (min-width: 640px) { .app-screens { grid-template-columns: 1fr 1fr; gap: var(--space-6); } }
+  .app-screens img { width: 100%; height: auto; display: block; border: none; }
+  .app-screens__caption { font-family: var(--font-mono); font-size: var(--font-size-caption); color: var(--color-ink-muted); margin: calc(var(--space-2) * -1) 0 var(--space-8); }
 
   /* CTA + FOOTER */
   .p-cta { padding-block: var(--space-16); border-top: var(--border-width-hairline) solid var(--color-border-subtle); }
@@ -129,56 +148,117 @@
     </section>
 
     <div class="wrap">
-      <figure class="p-cover"><img src="assets/cover.png" alt="Building AI Web Applications — cover" onerror="this.closest('.p-cover').remove()" /></figure>
+      <figure class="p-moodboard"><img src="assets/Moodboard.png" alt="Portfolio moodboard" onerror="this.closest('figure').remove()" /><figcaption>Portfolio Moodboard — informed the creation of the design system being used across this website</figcaption></figure>
     </div>
 
     <div class="wrap">
-      <div class="article">
-        <h2>Overview</h2>
-        <p>This collection is a record of five web apps I designed and built this semester using AI assisted development tools, each one a small, self contained problem used to practice a different piece of the same skill: going from an idea to a working, deployed application with AI as a genuine build partner. The throughline across every app is the same repeatable method — plan first, design a system, prompt deliberately, wire in real logic, then ship. By the end of the semester that method took me from a blank prompt to a live, functioning app in about a week.</p>
-
-        <h2>Problem</h2>
-        <p>The brief for the semester was to learn how to build functional web apps quickly using AI assisted tools, without relying on a traditional engineering background to get there. A single large project would not have taught that skill well. One project only tests one set of decisions once. A series of small, varied apps — a budgeting tool, a tracker, a household dashboard, a book discovery tool — forced me to reapply the same method in a fresh context every time, which is what actually builds fluency instead of memorizing one project's quirks.</p>
-
-        <h2>Approach</h2>
-        <p>The same method carried across every app, even as the apps themselves got more ambitious:</p>
-        <ul>
-          <li><strong>Plan the flows first.</strong> Before writing a single prompt, I defined the core user tasks and mapped the user flow and site structure for the app. Skipping this step early in the semester was the clearest cause of an app drifting structurally as it grew.</li>
-          <li><strong>Define a small design system.</strong> Starting in Week 4, every app got a lightweight component and token set — colors, type, spacing — before I asked for more screens. This is what kept an app visually consistent as I added features, instead of every new screen introducing its own styling.</li>
-          <li><strong>Prompt in Plan Mode, then switch to Agent Mode.</strong> I used Cursor's Plan Mode to review what the AI intended to build against my plan file before letting it execute in Agent Mode. Reviewing the plan first caught misunderstandings before they became code.</li>
-          <li><strong>Review before executing.</strong> Every generated change got a read through before I accepted it, especially once I started wiring in real data and logic.</li>
-          <li><strong>Wire real data and logic.</strong> Once the structure and system were solid, I connected real data — a public API, database tables, or stored state — and built out the loading, empty, success, and error states that a real user would actually hit.</li>
-          <li><strong>Commit and deploy.</strong> Every app ended the same way: committed with meaningful history where version control was in place, and published live on Netlify.</li>
-        </ul>
-
-        <h2>The Apps</h2>
-
-        <h3>BudgetIsland</h3>
-        <p>A spending tracker with a gamified twist. Set a monthly limit, log spending day to day, and a small visual island grows when you have a quiet, low spend day. All data stays on device. This was my first app of the semester, built with a single tool and no upfront planning, and the most interesting lesson was seeing how quickly a project without a plan starts making its own inconsistent decisions as it grows.</p>
-        <figure><img src="assets/budgetisland.png" alt="BudgetIsland — screen" onerror="this.closest('figure').remove()" /><figcaption>BudgetIsland — screen</figcaption></figure>
-
-        <h3>CoffeeTracker</h3>
-        <p>[Description pending — let me know what this app actually tracks and I will fill this in accurately]</p>
-        <figure><img src="assets/coffeetracker.png" alt="CoffeeTracker — screen" onerror="this.closest('figure').remove()" /><figcaption>CoffeeTracker — screen</figcaption></figure>
-
-        <h3>ChoreTracker</h3>
-        <p>A household chore dashboard for a shared home. Weekly task cards show the assignee, due date, and status, with room to attach a completion photo. I built this app twice. The first version came out of a two tool pipeline, starting the first user task in Figma Make, then downloading that code into Cursor to finish the rest. The second version was a full rebuild on top of a formal design system, following a six step process of analyzing a moodboard, defining principles, building design tokens, defining components, and writing it all into a DESIGN.md file. Rebuilding the same app instead of starting fresh made the value of a design system undeniable — the second version stayed consistent in a way the first one never quite did.</p>
-        <figure><img src="assets/choretracker.png" alt="ChoreTracker — screen" onerror="this.closest('figure').remove()" /><figcaption>ChoreTracker — screen</figcaption></figure>
-
-        <h3>ReadRoulette</h3>
-        <p>A book discovery tool that pulls live from the Open Library public API. Search by title, filter by genre, or spin a random bundle of books, then save titles for later. This app was where I built out real data states for the first time — loading, empty, success, and error — rather than assuming the happy path is the only one a user will see.</p>
-        <figure><img src="assets/readroulette.png" alt="ReadRoulette — screen" onerror="this.closest('figure').remove()" /><figcaption>ReadRoulette — screen</figcaption></figure>
-
-        <h2>Process</h2>
-        <p>Each app picked up where the last one left off. BudgetIsland taught me the basics of prompting with a single tool and no plan. CoffeeTracker added the discipline of mapping user flows and site structure before writing a single prompt. ChoreTracker's first version introduced a two tool workflow, moving between Figma Make and Cursor, and its second version added a real design system, which is the point where my apps stopped looking like separate one off experiments and started looking like they came from the same hand. ReadRoulette added live data and the states that come with it. The clearest trade off across the semester was speed against structure — moving fast without a plan felt faster in the moment, but it cost more time later fixing inconsistency than planning would have taken up front.</p>
-
-        <h2>Outcome</h2>
-        <p>Four small apps and one larger course project, all deployed and live, each demonstrating a distinct piece of the AI assisted build pipeline: prompting fundamentals, user flow driven planning, a Figma Make to Cursor workflow, formal design systems, live API integration and data states, and version controlled deployment. Taken together, the body of work shows I can carry a product from an idea through a working, systemized, deployed application, using AI as the primary build tool rather than a drafting aid.</p>
-
-        <h2>Reflection</h2>
-        <p>The biggest thing I learned is that a design system is not a finishing touch — it is infrastructure that needs to exist before a project scales past its first few screens. Rebuilding ChoreTracker in Week 4 proved that in a way reading about design systems never could. If I started the semester over, I would build a lightweight design system on day one, even for something as small as BudgetIsland. More broadly, this semester changed how I see my own role. I came in thinking of myself as a researcher and service designer who hands off direction to engineers. I am leaving it able to carry a product from research and user flows through to a deployed, working application, which changes the kind of conversation I can have with an engineering team from the very start.</p>
-      </div>
+      <figure class="p-cover"><img src="assets/cover.png" alt="Building AI Web Applications — cover" onerror="this.closest('.p-cover').remove()" /></figure>
     </div>
+
+    <!-- OVERVIEW -->
+    <section class="cs-section" aria-labelledby="s-overview">
+      <div class="wrap cs-section__grid">
+        <div class="cs-section__head"><span class="cs-section__num">01</span><h2 id="s-overview">Overview</h2></div>
+        <div class="prose">
+          <p>This collection is a record of five web apps I designed and built this semester using AI assisted development tools, each one a small, self contained problem used to practice a different piece of the same skill: going from an idea to a working, deployed application with AI as a genuine build partner. The throughline across every app is the same repeatable method — plan first, design a system, prompt deliberately, wire in real logic, then ship. By the end of the semester that method took me from a blank prompt to a live, functioning app in about a week.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="cs-section" aria-labelledby="s-problem">
+      <div class="wrap cs-section__grid">
+        <div class="cs-section__head"><span class="cs-section__num">02</span><h2 id="s-problem">Problem</h2></div>
+        <div class="prose">
+          <p>The brief for the semester was to learn how to build functional web apps quickly using AI assisted tools, without relying on a traditional engineering background to get there. A single large project would not have taught that skill well. One project only tests one set of decisions once. A series of small, varied apps — a budgeting tool, a tracker, a household dashboard, a book discovery tool — forced me to reapply the same method in a fresh context every time, which is what actually builds fluency instead of memorizing one project's quirks.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- APPROACH -->
+    <section class="cs-section" aria-labelledby="s-approach">
+      <div class="wrap cs-section__grid">
+        <div class="cs-section__head"><span class="cs-section__num">03</span><h2 id="s-approach">Approach</h2></div>
+        <div class="prose">
+          <p>The same method carried across every app, even as the apps themselves got more ambitious:</p>
+          <ul class="flist">
+            <li><strong>Plan the flows first.</strong> Before writing a single prompt, I defined the core user tasks and mapped the user flow and site structure for the app. Skipping this step early in the semester was the clearest cause of an app drifting structurally as it grew.</li>
+            <li><strong>Define a small design system.</strong> Starting in Week 4, every app got a lightweight component and token set — colors, type, spacing — before I asked for more screens. This is what kept an app visually consistent as I added features, instead of every new screen introducing its own styling.</li>
+            <li><strong>Prompt in Plan Mode, then switch to Agent Mode.</strong> I used Cursor's Plan Mode to review what the AI intended to build against my plan file before letting it execute in Agent Mode. Reviewing the plan first caught misunderstandings before they became code.</li>
+            <li><strong>Review before executing.</strong> Every generated change got a read through before I accepted it, especially once I started wiring in real data and logic.</li>
+            <li><strong>Wire real data and logic.</strong> Once the structure and system were solid, I connected real data — a public API, database tables, or stored state — and built out the loading, empty, success, and error states that a real user would actually hit.</li>
+            <li><strong>Commit and deploy.</strong> Every app ended the same way: committed with meaningful history where version control was in place, and published live on Netlify.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE APPS -->
+    <section class="cs-section" aria-labelledby="s-apps">
+      <div class="wrap cs-section__grid">
+        <div class="cs-section__head"><span class="cs-section__num">04</span><h2 id="s-apps">The Apps</h2></div>
+        <div class="prose">
+          <h3>Budget Island</h3>
+          <p>A spending tracker with a gamified twist. Set a monthly limit, log spending day to day, and a small visual island grows when you have a quiet, low spend day. All data stays on device. This was my first app of the semester, built with a single tool and no upfront planning, and the most interesting lesson was seeing how quickly a project without a plan starts making its own inconsistent decisions as it grows.</p>
+          <div class="app-screens" aria-label="Budget Island screens">
+            <img src="assets/BudgetIsland1.png" alt="Budget Island — screen 1" />
+            <img src="assets/BudgetIsalnd2.png" alt="Budget Island — screen 2" />
+          </div>
+
+          <h3>Coffee Tracker</h3>
+          <p>Coffee Tracker logs every coffee run, the drink, the cafe, and the price, then plots each visit on a map so a running history of where you've been builds itself automatically. Favorite cafes get saved separately, making it easy to see patterns in where and what you actually order over time.</p>
+          <div class="app-screens" aria-label="Coffee Tracker screens">
+            <img src="assets/CoffeeTracker1.png" alt="Coffee Tracker — screen 1" />
+            <img src="assets/CoffeeTracker2.png" alt="Coffee Tracker — screen 2" />
+          </div>
+
+          <h3>Chore Tracker</h3>
+          <p>A household chore dashboard for a shared home. Weekly task cards show the assignee, due date, and status, with room to attach a completion photo. I built this app twice. The first version came out of a two tool pipeline, starting the first user task in Figma Make, then downloading that code into Cursor to finish the rest. The second version was a full rebuild on top of a formal design system, following a six step process of analyzing a moodboard, defining principles, building design tokens, defining components, and writing it all into a DESIGN.md file. Rebuilding the same app instead of starting fresh made the value of a design system undeniable — the second version stayed consistent in a way the first one never quite did.</p>
+          <div class="app-screens" aria-label="Chore Tracker screens">
+            <img src="assets/ChoreTracker1.png" alt="Chore Tracker — before: AI default design" />
+            <img src="assets/ChoreTracker2.png" alt="Chore Tracker — after: custom design system" />
+          </div>
+          <p class="app-screens__caption">Before and after: the AI's default design versus a custom design system built from an inspiration board and documented in DESIGN.md.</p>
+
+          <h3>Read Roulette</h3>
+          <p>A book discovery tool that pulls live from the Open Library public API. Search by title, filter by genre, or spin a random bundle of books, then save titles for later. This app was where I built out real data states for the first time — loading, empty, success, and error — rather than assuming the happy path is the only one a user will see.</p>
+          <div class="app-screens" aria-label="Read Roulette screens">
+            <img src="assets/ReadRoulette.png" alt="Read Roulette — screen 1" />
+            <img src="assets/ReadRoulette2.png" alt="Read Roulette — screen 2" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="cs-section" aria-labelledby="s-process">
+      <div class="wrap cs-section__grid">
+        <div class="cs-section__head"><span class="cs-section__num">05</span><h2 id="s-process">Process</h2></div>
+        <div class="prose">
+          <p>Each app picked up where the last one left off. Budget Island taught me the basics of prompting with a single tool and no plan. Coffee Tracker added the discipline of mapping user flows and site structure before writing a single prompt. Chore Tracker's first version introduced a two tool workflow, moving between Figma Make and Cursor, and its second version added a real design system, which is the point where my apps stopped looking like separate one off experiments and started looking like they came from the same hand. Read Roulette added live data and the states that come with it. The clearest trade off across the semester was speed against structure — moving fast without a plan felt faster in the moment, but it cost more time later fixing inconsistency than planning would have taken up front.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUTCOME -->
+    <section class="cs-section" aria-labelledby="s-outcome">
+      <div class="wrap cs-section__grid">
+        <div class="cs-section__head"><span class="cs-section__num">06</span><h2 id="s-outcome">Outcome</h2></div>
+        <div class="prose">
+          <p>Four small apps and one larger course project, all deployed and live, each demonstrating a distinct piece of the AI assisted build pipeline: prompting fundamentals, user flow driven planning, a Figma Make to Cursor workflow, formal design systems, live API integration and data states, and version controlled deployment. Taken together, the body of work shows I can carry a product from an idea through a working, systemized, deployed application, using AI as the primary build tool rather than a drafting aid.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- REFLECTION -->
+    <section class="cs-section" aria-labelledby="s-reflection">
+      <div class="wrap cs-section__grid">
+        <div class="cs-section__head"><span class="cs-section__num">07</span><h2 id="s-reflection">Reflection</h2></div>
+        <div class="prose">
+          <p>The biggest thing I learned is that a design system is not a finishing touch — it is infrastructure that needs to exist before a project scales past its first few screens. Rebuilding Chore Tracker in Week 4 proved that in a way reading about design systems never could. If I started the semester over, I would build a lightweight design system on day one, even for something as small as Budget Island. More broadly, this semester changed how I see my own role. I came in thinking of myself as a researcher and service designer who hands off direction to engineers. I am leaving it able to carry a product from research and user flows through to a deployed, working application, which changes the kind of conversation I can have with an engineering team from the very start.</p>
+        </div>
+      </div>
+    </section>
   </article>
 
   <section class="p-cta">
