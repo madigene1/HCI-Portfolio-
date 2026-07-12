@@ -68,64 +68,65 @@
   }
 
   /* =================== HERO =================== */
-  .hero { position: relative; padding-block: var(--space-12) var(--space-16); border-bottom: var(--border-width-hairline) solid var(--color-border-subtle); overflow: hidden; }
+  .hero { position: relative; padding-block: var(--space-12) 0; border-bottom: var(--border-width-hairline) solid var(--color-border-subtle); overflow: hidden; }
   .hero .wrap { position: relative; }
 
   .hero__eyebrow { display: flex; align-items: center; justify-content: center; gap: var(--space-2); font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); text-align: center; }
   .hero__eyebrow-dot { width: 8px; height: 8px; border-radius: var(--radius-pill); background: var(--accent); flex-shrink: 0; }
 
-  /* stage: centered title with the cutout portrait overlapping, info floating around */
-  .hero__stage { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: var(--space-8); }
-  .hero__stage::before { content: ""; position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%); width: min(640px, 120%); aspect-ratio: 1 / 1; background: radial-gradient(circle at center, var(--accent-soft) 0%, transparent 60%); z-index: var(--z-base); pointer-events: none; }
+  /* stage: title with the large cutout portrait overlapping it */
+  .hero__stage { position: relative; margin-top: var(--space-8); }
 
-  .hero__title { position: relative; z-index: var(--z-raised); text-transform: uppercase; color: var(--color-ink-strong); }
+  .hero__headline { position: relative; width: 100%; height: clamp(420px, 74vw, 780px); }
+  .hero__headline::before { content: ""; position: absolute; left: 50%; top: 54%; transform: translate(-50%, -50%); width: min(760px, 128%); aspect-ratio: 1 / 1; background: radial-gradient(circle at center, var(--accent-soft) 0%, transparent 60%); z-index: var(--z-base); pointer-events: none; }
+
+  .hero__title { position: absolute; top: 0; left: 0; right: 0; z-index: var(--z-base); text-align: center; text-transform: uppercase; color: var(--color-ink-strong); }
   .hero__title-a, .hero__title-b { display: block; }
   .hero__title-a { font-family: var(--font-heading); font-weight: var(--font-weight-black); font-size: clamp(2.5rem, 8.5vw, 6rem); line-height: var(--line-height-tight); letter-spacing: -0.02em; }
   .hero__title-b { font-family: var(--font-display); font-weight: var(--font-weight-regular); font-size: clamp(1.4rem, 4vw, 3rem); line-height: 1.15; letter-spacing: 0.02em; color: var(--color-ink-muted); margin-top: var(--space-4); }
 
-  .hero__portrait { position: relative; z-index: var(--z-raised); width: min(340px, 76%); margin-top: var(--space-6); }
-  .hero__portrait img { display: block; width: 100%; height: auto; }
+  .hero__portrait { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: clamp(280px, 48vw, 480px); max-width: 92%; z-index: var(--z-raised); margin: 0; }
+  .hero__portrait img { display: block; width: 100%; height: auto; opacity: 0.96; }
 
-  /* floating info blocks (stacked on mobile, positioned around the portrait on desktop) */
-  .hero__float { position: relative; z-index: var(--z-raised); }
+  /* meta floats around the portrait — out of flow so the divider sits on the photo bottom */
+  .hero__meta { display: contents; }
 
-  .hero__now { display: inline-flex; align-items: center; gap: var(--space-3); background: var(--color-bg-raised); border: var(--border-width-hairline) solid var(--color-border-default); border-radius: var(--radius-sm); padding: var(--space-3) var(--space-4); box-shadow: var(--shadow-raised); max-width: 100%; margin-top: var(--space-8); }
+  .hero__now, .hero__desc, .hero__trust, .hero__cta { position: absolute; z-index: var(--z-raised); margin: 0; }
+  .hero__now { display: inline-flex; align-items: center; gap: var(--space-2); }
   .hero__now-dot { position: relative; width: 9px; height: 9px; border-radius: var(--radius-pill); background: var(--color-success); flex-shrink: 0; }
   .hero__now-dot::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius-pill); background: var(--color-success); animation: nowPulse 2.4s var(--ease-standard) infinite; }
-  .hero__now-label { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-muted); flex-shrink: 0; }
-  .hero__now-role { font-size: var(--font-size-body-sm); color: var(--color-ink-strong); }
+  .hero__now-role { font-size: var(--font-size-lead); color: var(--color-ink-strong); }
   .hero__now-role strong { font-weight: var(--font-weight-bold); }
   @keyframes nowPulse { 0% { transform: scale(1); opacity: 0.6; } 70% { transform: scale(2.6); opacity: 0; } 100% { transform: scale(2.6); opacity: 0; } }
 
-  .hero__desc { max-width: 34ch; font-size: var(--font-size-lead); color: var(--color-ink-body); margin-top: var(--space-6); }
+  .hero__desc { max-width: 42ch; font-size: var(--font-size-lead); color: var(--color-ink-body); }
 
-  .hero__trust { display: flex; align-items: center; gap: var(--space-3); max-width: 360px; text-align: left; margin-top: var(--space-8); }
+  .hero__trust { display: flex; align-items: center; gap: var(--space-3); max-width: 360px; text-align: left; }
   .hero__avatars { display: inline-flex; flex-shrink: 0; }
-  .hero__avatars span { width: 32px; height: 32px; border-radius: var(--radius-pill); background: var(--color-bg-sunken); border: var(--border-width-default) solid var(--color-bg-base); margin-left: -8px; }
+  .hero__avatars span { width: 32px; height: 32px; border-radius: var(--radius-pill); background: var(--accent-soft); border: var(--border-width-default) solid var(--color-bg-base); margin-left: -8px; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; }
   .hero__avatars span:first-child { margin-left: 0; }
+  .hero__avatars img { width: 72%; height: 72%; object-fit: contain; display: block; }
   .hero__trust p { font-size: var(--font-size-body-sm); color: var(--color-ink-muted); }
   .hero__trust strong { color: var(--color-ink-strong); font-weight: var(--font-weight-bold); }
 
-  .hero__cta { border-radius: var(--radius-pill); margin-top: var(--space-8); }
+  .hero__cta { border-radius: var(--radius-pill); }
 
-  /* desktop: overlay layout — title behind, large cutout centered in front, info in the corners */
-  @media (min-width: 1024px) {
-    .hero__stage { display: block; min-height: 720px; margin-top: var(--space-12); }
-    .hero__stage::before { width: min(820px, 130%); top: 50%; }
-    .hero__title { position: absolute; top: var(--space-4); left: 0; right: 0; text-align: center; z-index: var(--z-base); }
-    .hero__portrait { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: min(560px, 44vw); margin: 0; }
-    .hero__float { position: absolute; margin: 0; }
-    .hero__now.hero__float { top: 46%; left: 0; }
-    .hero__desc.hero__float { top: 44%; right: 0; text-align: right; max-width: 19ch; }
-    .hero__trust.hero__float { left: 0; bottom: var(--space-8); max-width: 14rem; }
-    .hero__cta.hero__float { right: 0; bottom: var(--space-8); }
+  @media (max-width: 767px) {
+    .hero__eyebrow { flex-wrap: wrap; }
+    .hero__now { left: 50%; transform: translateX(-50%); bottom: 38%; white-space: nowrap; }
+    .hero__desc { left: 50%; transform: translateX(-50%); bottom: 30%; text-align: center; max-width: 28ch; font-size: var(--font-size-body-sm); }
+    .hero__trust { left: 50%; transform: translateX(-50%); bottom: 14%; text-align: center; flex-direction: column; max-width: 18rem; }
+    .hero__cta { left: 50%; transform: translateX(-50%); bottom: 2%; }
   }
 
-  @media (max-width: 1023px) {
-    .hero__eyebrow { flex-wrap: wrap; }
-    .hero__now { flex-wrap: wrap; justify-content: center; }
-    .hero__desc { text-align: center; }
-    .hero__trust { text-align: center; flex-direction: column; max-width: 30rem; }
+  /* tablet & up: wrap the supporting info around the photo */
+  @media (min-width: 768px) {
+    .hero__headline { height: clamp(500px, 68vw, 780px); }
+    .hero__portrait { width: clamp(300px, 42vw, 520px); }
+    .hero__now { top: 30%; right: 0; transform: none; }
+    .hero__desc { top: 36%; right: 0; text-align: right; max-width: 18ch; transform: none; }
+    .hero__trust { left: 0; bottom: var(--space-8); max-width: 13rem; transform: none; }
+    .hero__cta { right: 0; bottom: var(--space-8); transform: none; }
   }
 
   /* =================== BUTTONS =================== */
@@ -173,7 +174,8 @@
   /* ---- left: badge photo + identity ---- */
   .about__badge-row { display: flex; align-items: center; gap: var(--space-6); }
   .about__badge-info { flex: 1 1 auto; min-width: 0; }
-  /* ID work badge placeholder (moodboard lanyard style) */
+  /* ID work badge photo */
+  .about__badge-photo { width: min(340px, 100%); height: auto; display: block; margin-inline: auto; mix-blend-mode: multiply; }
   .about__badge { flex-shrink: 0; width: min(190px, 46%); position: relative; background: var(--color-bg-raised); border: var(--border-width-hairline) solid var(--color-border-default); box-shadow: var(--shadow-object); }
   .badge__clip { width: 56px; height: 14px; margin: calc(var(--space-6) * -1) auto 0; background: var(--color-bg-raised); border: var(--border-width-hairline) solid var(--color-border-default); border-radius: var(--radius-pill); position: relative; }
   .badge__clip::after { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 28px; height: 5px; background: var(--color-bg-sunken); border-radius: var(--radius-pill); }
@@ -264,32 +266,39 @@
   <!-- HERO -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap">
-      <p class="hero__eyebrow"><span class="hero__eyebrow-dot" aria-hidden="true"></span> Portfolio · Service Design &amp; UX Research</p>
+      <p class="hero__eyebrow"><span class="hero__eyebrow-dot" aria-hidden="true"></span> Portfolio · 2026</p>
 
       <div class="hero__stage">
-        <h1 id="hero-title" class="hero__title">
-          <span class="hero__title-a">Hi, I'm Madison</span>
-          <span class="hero__title-b">A Researcher and Service Designer</span>
-        </h1>
+        <div class="hero__headline">
+          <h1 id="hero-title" class="hero__title">
+            <span class="hero__title-a">Hi, I'm Madison</span>
+            <span class="hero__title-b">UX Researcher &amp; Service Designer</span>
+          </h1>
 
-        <figure class="hero__portrait">
-          <img src="Assets/Photo_Me_Cut.png" alt="Portrait of Madison Hobbs" />
-        </figure>
+          <figure class="hero__portrait">
+            <img src="Assets/Final_Photo_Me.png" alt="Portrait of Madison Hobbs" />
+          </figure>
 
-        <div class="hero__now hero__float">
-          <span class="hero__now-dot" aria-hidden="true"></span>
-          <span class="hero__now-label">Currently</span>
-          <span class="hero__now-role"><strong>Intuit</strong> — Senior CX Professional</span>
+          <div class="hero__meta">
+            <p class="hero__now">
+              <span class="hero__now-dot" aria-hidden="true"></span>
+              <span class="hero__now-role"><strong>Intuit</strong> — Senior CX Professional</span>
+            </p>
+
+            <p class="hero__desc">Service designer and researcher, building customer experiences grounded in evidence.</p>
+
+            <div class="hero__trust">
+              <span class="hero__avatars" aria-hidden="true">
+                <span><img src="Assets/Udemy.png" alt="" /></span>
+                <span><img src="Assets/TechFleet.png" alt="" /></span>
+                <span><img src="Assets/Iowa.png" alt="" /></span>
+              </span>
+              <p><strong>Human-centered by training</strong> — research, service strategy, and hands-on prototyping.</p>
+            </div>
+
+            <a href="#contact" class="btn btn--primary hero__cta">Get in touch <span aria-hidden="true">→</span></a>
+          </div>
         </div>
-
-        <p class="hero__desc hero__float">Service designer and researcher, building customer experiences grounded in evidence.</p>
-
-        <div class="hero__trust hero__float">
-          <span class="hero__avatars" aria-hidden="true"><span></span><span></span><span></span></span>
-          <p><strong>Human-centered by training</strong> — research, service strategy, and hands-on prototyping.</p>
-        </div>
-
-        <a href="#contact" class="btn btn--primary hero__cta hero__float">Get in touch <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -363,12 +372,16 @@
 
         <div class="about__identity">
           <div class="about__badge-row">
+            <img class="about__badge-photo" src="Assets/Badge_Photo.png" alt="Madison Hobbs work badge" />
+          </div>
+          <!--
+            SAVED: original coded ID-badge card (kept for reference / to restore later).
+            To restore, delete the <img class="about__badge-photo"> above and un-comment this block.
             <div class="about__badge" aria-label="Work badge (placeholder)">
               <div class="badge__clip" aria-hidden="true"></div>
               <div class="badge__body">
                 <div class="badge__head"><span class="t">Intuit</span><span class="d">2026</span></div>
                 <div class="badge__photo">
-                  <!-- Replace the placeholder glyph with <img src="Assets/Photo_Me.jpg" alt="Photo of Madison Hobbs" /> -->
                   <svg class="placeholder-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                     <circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
                   </svg>
@@ -381,7 +394,7 @@
                 <div class="badge__id">HCI · MASTERS — SAN DIEGO</div>
               </div>
             </div>
-          </div>
+          -->
           <ul class="about__social" aria-label="Links">
             <li><a href="https://www.linkedin.com/in/madisonhobbs" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
             <li><a href="mailto:madisonhobbs22@gmail.com">Email</a></li>
@@ -406,6 +419,11 @@
                 <span class="exp__role">UX Researcher</span>
                 <span class="exp__org">Blink UX</span>
                 <span class="exp__years">2024 <span class="arrow" aria-hidden="true">→</span> 2025</span>
+              </li>
+              <li class="exp__row">
+                <span class="exp__role">UX Researcher</span>
+                <span class="exp__org">TechFleet</span>
+                <span class="exp__years">2023</span>
               </li>
               <li class="exp__row">
                 <span class="exp__role">Archaeologist</span>

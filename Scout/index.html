@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Scout — Camping Permit Booking &amp; Reminders · Case Study</title>
-<meta name="description" content="Case study: Scout, a mobile-first web app that turns the deadline-driven national park permit process into a guided flow with proactive reminders — built on a full AI-assisted development workflow." />
+<title>Scout — Camping Permit Booking and Reminders · Case Study</title>
+<meta name="description" content="Case study: Scout, a web app that turns the deadline-driven national park permit process into a guided flow with proactive reminders — built on a full AI-built development workflow." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=Share+Tech+Mono&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -102,7 +102,7 @@
   .pill { font-family: var(--font-mono); font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); color: var(--color-ink-inverse); background: var(--color-bg-inverse); padding: var(--space-1) var(--space-3); }
 
   /* =================== COVER =================== */
-  .cover { position: relative; margin-top: var(--space-12); background: var(--color-bg-sunken); border: var(--border-width-hairline) solid var(--color-border-default); box-shadow: var(--shadow-paper); overflow: hidden; }
+  .cover { position: relative; margin-top: var(--space-12); overflow: hidden; }
   .cover:not(:has(img)) { aspect-ratio: 16 / 9; }
   .cover img { display: block; width: 100%; height: auto; }
   .cover__ph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-3); color: var(--color-ink-faint); }
@@ -147,8 +147,10 @@
   .prose { max-width: var(--container-narrow); }
   .prose > p { font-size: var(--font-size-lead); color: var(--color-ink-body); }
   .prose > p + p { margin-top: var(--space-4); }
+  .prose > ul + p { margin-top: var(--space-6); }
   .prose h3 { font-size: var(--font-size-lead); font-weight: var(--font-weight-bold); color: var(--color-ink-strong); margin-top: var(--space-12); margin-bottom: var(--space-4); }
   .prose > p + h3 { margin-top: var(--space-12); }
+  .prose > ul + h3 { margin-top: var(--space-12); }
 
   /* feature / constraint lists (bold lead + text) */
   .flist { list-style: none; margin-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
@@ -224,8 +226,8 @@
           <span class="tag">Prototyping</span>
         </div>
       </div>
-      <h1 id="cs-title">Scout — Camping Permit Booking &amp; Reminders</h1>
-      <p class="cs-hero__lede">A mobile-first web app that turns the messy, deadline-driven national park permit process into a guided flow with proactive reminders — and the project where I built a full AI-assisted development workflow end to end, from scripted userflows to a live, deployed product with real auth and real data.</p>
+      <h1 id="cs-title">Scout — Camping Permit Booking and Reminders</h1>
+      <p class="cs-hero__lede">A web app that turns the deadline-driven national park permit process into a guided flow with proactive reminders — and the project where I ran a full AI-built development workflow end to end: I planned and directed, AI built, and I tested the result like a real user would.</p>
 
       <dl class="cs-meta">
         <div>
@@ -247,7 +249,7 @@
       </dl>
 
       <figure class="cover">
-        <img src="assets/Scout.png" alt="Scout — cover" onerror="this.remove()" />
+        <img src="assets/Scout_Home_Design.png" alt="Scout home screen — cover" onerror="this.remove()" />
       </figure>
     </div>
   </section>
@@ -255,9 +257,9 @@
   <!-- OVERVIEW -->
   <section class="cs-section" aria-labelledby="s-overview">
     <div class="wrap cs-section__grid">
-      <div class="cs-section__head"><span class="cs-section__num">00</span><h2 id="s-overview">Overview</h2></div>
+      <div class="cs-section__head"><span class="cs-section__num">01</span><h2 id="s-overview">Overview</h2></div>
       <div class="prose">
-        <p>Scout is a mobile-first web app that helps campers reserve hard-to-get national park campsites by turning the messy, deadline-driven permit process into a guided flow with proactive reminders. This project was also where I built a full AI-assisted development workflow end to end, from scripted userflows and a custom design system through to a live, deployed product with real authentication and real data.</p>
+        <p>Scout is a web app that helps campers reserve hard-to-get national park campsites, turning a deadline-driven permit process into a guided flow with proactive reminders. I used this project to run a full <strong>AI-built development workflow</strong> end to end: I planned and directed, AI built, and I tested the result like a real user would.</p>
       </div>
     </div>
   </section>
@@ -265,16 +267,9 @@
   <!-- PROBLEM -->
   <section class="cs-section" aria-labelledby="s-problem">
     <div class="wrap cs-section__grid">
-      <div class="cs-section__head"><span class="cs-section__num">01</span><h2 id="s-problem">Problem</h2></div>
+      <div class="cs-section__head"><span class="cs-section__num">02</span><h2 id="s-problem">Problem</h2></div>
       <div class="prose">
-        <p>Booking a campsite at a popular national park is a timing game most people lose. Permit windows open on specific future dates, availability is scarce, and the tools that exist (Rec.gov, scattered park websites) assume you already know when and where to look. The user problem: planners miss booking windows because there's no unified way to track when a specific park's permit opens, and no nudge at the right moment. The business/service problem: high intent to camp doesn't convert into bookings, because the critical “window opens” moment happens off-platform and unremembered.</p>
-        <h3>Constraints that shaped the work</h3>
-        <ul class="flist">
-          <li><strong>Permit-window deadlines are fixed and unforgiving.</strong> The experience has to reduce the odds of missing them, not just display them.</li>
-          <li><strong>Availability is external and volatile.</strong> Real inventory and payment live on Rec.gov, so Scout can own intent, tracking, and handoff — but not the transaction itself.</li>
-          <li><strong>Real park data.</strong> Parks and campsites come from the public NPS API, so the catalog had to be built around live, sometimes-incomplete data rather than idealized mockups.</li>
-          <li><strong>Mobile-first.</strong> People plan trips on their phones, so every core flow had to work in a small viewport.</li>
-        </ul>
+        <p>Campers trying to book a site at a competitive national park need a way to know exactly when a specific park's permit window opens and to act on it before it closes, because windows open on fixed dates with scarce availability, and existing tools like Rec.gov and scattered park sites assume they already know when and where to look.</p>
       </div>
     </div>
   </section>
@@ -282,88 +277,20 @@
   <!-- APPROACH -->
   <section class="cs-section" aria-labelledby="s-approach">
     <div class="wrap cs-section__grid">
-      <div class="cs-section__head"><span class="cs-section__num">02</span><h2 id="s-approach">Approach</h2></div>
+      <div class="cs-section__head"><span class="cs-section__num">03</span><h2 id="s-approach">Approach</h2></div>
       <div class="prose">
-        <p>I translated the problem into structure before generating a single screen: explicit site architecture, scripted userflows, and a documented design system, each built to double as direct input for AI-assisted development.</p>
-
-        <div class="approach-step">
-          <span class="approach-step__num">Step 01</span>
-          <h3>Userflows written as executable logic, not narrative</h3>
-          <p>I scripted the three core jobs (Discover and Explore Parks, Set a Permit Booking Reminder, Sync Trip and Manage Itinerary) as step-by-step conditional flows, e.g. “user clicks a Park Card → system checks date availability → user clicks Add Reminder → system prompts for calendar permission.” Writing flows at this level of precision is what let AI tools generate a working approximation of the real product on the first pass, rather than a generic template.</p>
-          <figure class="cs-figure">
-            <div class="cs-figure__box">
-              <img src="assets/Scout_User_Flow.png" alt="Scout user flows scripted in Figma" onerror="this.remove()" />
-            </div>
-            <figcaption>User flows — the three core jobs scripted as step-by-step conditional logic.</figcaption>
-          </figure>
-        </div>
-
-        <div class="approach-step">
-          <span class="approach-step__num">Step 02</span>
-          <h3>A documented design system, developed and iterated deliberately</h3>
-          <p>I built the “Field Kit” system (DESIGN.md) from a moodboard through a structured six-step process: analyze the moodboard, define design principles, set design tokens, define components, write the doc, then review and refine. I ran a second full iteration pass once the tokens were tested against a real screen, refining color, type, and spacing rules before scaling to the rest of the app. The result: warm paper surfaces, ink-forward contrast, Neue Haas Grotesk Mono paired with a single Playfair Display editorial moment per screen, and one reserved yellow accent for the primary action on each screen.</p>
-          <figure class="cs-figure">
-            <div class="cs-figure__box">
-              <img src="assets/scoutdesignsystem.png" alt="Scout Field Kit design system" onerror="this.remove()" />
-            </div>
-            <figcaption>The “Field Kit” design system — tokens, type, and components documented before building screens.</figcaption>
-          </figure>
-        </div>
-
-        <div class="approach-step">
-          <span class="approach-step__num">Step 03</span>
-          <h3>Fluency across the AI-assisted build stack</h3>
-          <p>The core skill this project developed was sequencing tools that don't natively talk to each other into one pipeline: Figma Make for early design generation, Cursor (in plan mode, then agent mode) for implementation, Supabase for auth/database/edge functions, GitHub for version control, and Netlify for deployment. Knowing when to hand the AI agent a plan versus when to intervene directly was as much the learning objective as the finished app — the design evolved from an early AI-generated pass to a refined, shipped screen.</p>
-          <div class="compare">
-            <figure class="cs-figure">
-              <div class="cs-figure__box">
-                <img src="assets/Scout_Design_First.png" alt="Scout — early AI-generated design" onerror="this.remove()" />
-              </div>
-              <figcaption>From — early AI-generated design.</figcaption>
-            </figure>
-            <div class="compare__arrow" aria-hidden="true">→</div>
-            <figure class="cs-figure">
-              <div class="cs-figure__box">
-                <img src="assets/Scout_Design_Second.png" alt="Scout — refined, shipped design" onerror="this.remove()" />
-              </div>
-              <figcaption>To — refined, shipped design.</figcaption>
-            </figure>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROCESS -->
-  <section class="cs-section" aria-labelledby="s-process">
-    <div class="wrap cs-section__grid">
-      <div class="cs-section__head"><span class="cs-section__num">03</span><h2 id="s-process">Process</h2></div>
-      <div class="prose">
-        <p>The path from plan to shipped product:</p>
-        <ol class="steps">
-          <li><strong>Site structure and userflows became the IA.</strong> I initialized the app with 11 planned pages (Login, Home, Discover, Park Detail, Campsite Detail, Booking, Trips, Wishlist, Profile, Settings, Notifications) and scripted three full userflows before generating any screens. This became the actual route structure: <code>/discover</code>, <code>/park</code>, <code>/campsite</code>, <code>/book</code>, <code>/trips</code>, <code>/wishlist</code>, <code>/profile</code>, with reminders surfaced across multiple pages rather than buried in one settings screen.</li>
-          <li><strong>Design system before screens, validated and re-tuned once live.</strong> Locking the Field Kit tokens down before generating pages kept roughly a dozen screens visually consistent instead of drifting screen-by-screen, and having it documented meant I could direct the AI agent with rules instead of re-explaining style on every prompt.</li>
-          <li><strong>Database schema generated from the userflows, then reviewed before execution.</strong> Rather than designing tables first, I had Cursor design the Supabase schema directly from the site structure and userflows I'd already written, then reviewed a PLAN.md and explicitly separated planning from execution (plan mode, then agent mode) instead of one-shotting the build.</li>
-          <li><strong>Real data wired deliberately, not bolted on.</strong> I added the Supabase plugin, then integrated the public NPS Parks API through a Supabase edge function so the API key stayed server-side in secrets rather than exposed to the client, treating the “look at the data before you build” step as a discrete part of the process rather than a shortcut.</li>
-          <li><strong>Calendar sync scoped as its own build step.</strong> Once the core flows worked, I specifically prompted for a way to sync permit reminders to a user's personal calendar (mobile or Google), treating notification delivery as a distinct design decision rather than a generic in-app alert.</li>
-          <li><strong>Version control and deployment built into the workflow.</strong> Changes were committed and pushed through GitHub (with secrets and env files excluded), then published to Netlify, making this a live, shareable product rather than a local prototype.</li>
-        </ol>
-
-        <h3>Design artifacts</h3>
-        <p>The planning work that fed the AI-assisted build — from mood, to a documented system, to scripted flows, to screen sketches.</p>
+        <p>Before writing a single prompt, I built the planning layer myself:</p>
+        <ul class="flist">
+          <li>A moodboard, sketches, and inspiration references</li>
+          <li>A full site structure and navigation map</li>
+          <li>Three scripted userflows for the core jobs: discovering parks, setting a permit reminder, and managing a trip itinerary</li>
+        </ul>
 
         <figure class="cs-figure">
           <div class="cs-figure__box">
             <img src="assets/Scout_MoodBoard.png" alt="Scout moodboard" onerror="this.remove()" />
           </div>
-          <figcaption>Moodboard — the visual starting point for the “Field Kit” system.</figcaption>
-        </figure>
-
-        <figure class="cs-figure">
-          <div class="cs-figure__box">
-            <img src="assets/scoutdesignsystem.png" alt="Building the DESIGN.md design system doc" onerror="this.remove()" />
-          </div>
-          <figcaption>Building DESIGN.md — moodboard → principles → tokens → components → doc → review, then a second iteration pass.</figcaption>
+          <figcaption>Moodboard — the visual starting point for the “Field Kit” system, informing DESIGN.md through principles → tokens → components → doc → review.</figcaption>
         </figure>
 
         <figure class="cs-figure">
@@ -387,13 +314,55 @@
           <figcaption>Sketching — further low-fidelity screen exploration.</figcaption>
         </figure>
 
-        <h3>Key product decisions and trade-offs</h3>
+        <p>Example, the reminder flow: a user sees an upcoming permit window, sets their notification timing and method, and the system syncs it to their calendar and confirms it saved. Writing flows at this level of detail gave the build a precise target instead of a vague brief.</p>
+
+        <figure class="cs-figure">
+          <div class="cs-figure__box">
+            <img src="assets/Scout_User_Flow.png" alt="Scout user flows scripted in Figma" onerror="this.remove()" />
+          </div>
+          <figcaption>User flows — the three core jobs scripted as step-by-step conditional logic.</figcaption>
+        </figure>
+
+        <h3>Where AI built, and where I directed it</h3>
         <ul class="flist">
-          <li><strong>Track-and-handoff vs. in-app checkout.</strong> I chose to model booking intent and route users to Rec.gov rather than fake a transaction. Trade-off: less “wow” in a demo, but honest, and it matches how the real ecosystem works.</li>
-          <li><strong>Reminders as the hero, not a feature.</strong> Rather than burying reminders in settings, I surfaced a Permit Reminders section on Home and “Add Reminder” on every campsite, betting that proactive nudges are the product's core value.</li>
-          <li><strong>Calendar sync without a heavy integration.</strong> Instead of building OAuth calendar write access, I used a Google Calendar “add event” URL plus a downloadable, shareable .ics file. Trade-off: no two-way sync, but it works across Google, Apple, and device calendars with zero auth friction — the right call for the coursework scope.</li>
-          <li><strong>Real data over mock.</strong> I integrated the live NPS API through a Supabase edge function to keep the key server-side, accepting the extra complexity of handling incomplete or variable API data.</li>
+          <li>I initialized the project using the course's prompt templates.</li>
+          <li>Every prompt after that was mine: page content, a design system generated from my moodboard, and ongoing changes as the build progressed.</li>
+          <li><strong>Cursor</strong>, connected to <strong>Supabase</strong>, <strong>GitHub</strong>, and <strong>Netlify</strong>, did the actual building: generating code from my prompts and iterating each time I asked for a change.</li>
+          <li>My role was planning, direction, and review. AI wrote the code.</li>
         </ul>
+
+        <div class="compare">
+          <figure class="cs-figure">
+            <div class="cs-figure__box">
+              <img src="assets/Scout_Design_First.png" alt="Scout — early AI-generated design" onerror="this.remove()" />
+            </div>
+            <figcaption>From — early AI-generated design.</figcaption>
+          </figure>
+          <div class="compare__arrow" aria-hidden="true">→</div>
+          <figure class="cs-figure">
+            <div class="cs-figure__box">
+              <img src="assets/Scout_Design_Second.png" alt="Scout — refined, shipped design" onerror="this.remove()" />
+            </div>
+            <figcaption>To — refined, shipped design.</figcaption>
+          </figure>
+        </div>
+
+        <h3>The design system</h3>
+        <p>I built the initial token set (color, type, spacing) from my moodboard. Once it rendered on a live screen, it did not fully match what I'd pictured, so I prompted a second pass. AI executed the refinement; my job was catching what wasn't working and directing the fix.</p>
+
+        <figure class="cs-figure">
+          <div class="cs-figure__box">
+            <img src="assets/scoutdesignsystem.png" alt="Scout Field Kit design system" onerror="this.remove()" />
+          </div>
+          <figcaption>The “Field Kit” design system — tokens, type, and components documented before building screens.</figcaption>
+        </figure>
+
+        <h3>Catching a real bug</h3>
+        <p>Once the core flows were built, I manually tested my own userflows against the live app. Some campsite pages linked to the same Rec.gov listing, others hit a 404. I inspected the code to find where the wrong campsite or park ID was being passed into the link, then prompted a fix that mapped each campsite to the correct listing. It works now, though the underlying data is still limited.</p>
+
+        <div class="pullquote">
+          <p>This is the core skill the project built: <strong>plan, prompt, review, fix.</strong> AI generated the app fast, but it could not judge on its own whether a flow made sense or a link was broken. That still took a real user testing it, which was me.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -403,40 +372,24 @@
     <div class="wrap cs-section__grid">
       <div class="cs-section__head"><span class="cs-section__num">04</span><h2 id="s-solution">Solution</h2></div>
       <div class="prose">
-        <p>Scout shipped two connected experiences.</p>
+        <p>Scout shipped two connected experiences:</p>
 
         <div class="feature">
           <span class="label">01 — Experience</span>
-          <h3>The permit booking flow</h3>
-          <p>From Discover, users filter parks by activity, region, and season (with a map/list toggle), drill into a park's seasonal guide and campsite list, and enter their desired dates. On the Booking page they confirm reservation details, guests and vehicles, and a transparent fee breakdown, then continue to Rec.gov for the actual payment. The key design move is honesty about the handoff: Scout does the planning, comparison, and prep work that Rec.gov doesn't, then gets the user to the right place to transact. Anything not ready to book can be saved to a Wishlist.</p>
+          <h3>Permit booking flow</h3>
+          <p>Filter parks by activity, region, and season, drill into a park's seasonal guide and campsite list, pick dates, confirm reservation details and fees, then continue to Rec.gov to pay. Anything not ready to book saves to a Wishlist.</p>
         </div>
 
         <div class="feature">
           <span class="label">02 — Experience</span>
-          <h3>The reminder system</h3>
-          <p>Because the permit window is the decisive moment, reminders are front and center: users set a reminder on any park or campsite, choose timing and notification method, and the app syncs it to their calendar — either via a Google Calendar link or a shareable, downloadable .ics event that works on iOS, Android, and desktop. Trips get the same treatment, so arrival, departure, and permit details land on the user's calendar, and trips can be shared with collaborators.</p>
+          <h3>Reminder system</h3>
+          <p>Set a reminder on any park or campsite, choose timing and notification method, and sync it to a calendar through Google Calendar or a downloadable event file that works on iOS, Android, and desktop.</p>
         </div>
 
         <div class="callout">
           <span class="label">Under the hood</span>
-          <p>Supabase Auth and profiles, RLS-scoped user data, avatar storage, and edge functions for NPS park and climate data.</p>
+          <p>Supabase Auth and profiles.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- OUTCOME -->
-  <section class="cs-section" aria-labelledby="s-outcome">
-    <div class="wrap cs-section__grid">
-      <div class="cs-section__head"><span class="cs-section__num">05</span><h2 id="s-outcome">Outcome</h2></div>
-      <div class="prose">
-        <p>This is a coursework prototype with real park data and authentication, built solo, deployed live rather than left as a local build.</p>
-        <ul class="flist">
-          <li>Shipped a coherent, real-data product across roughly a dozen routes on a consistent, documented design system, with live NPS parks rather than throwaway mockups.</li>
-          <li>Built and operated a full AI-assisted development pipeline end to end (Figma Make → Cursor → Supabase → GitHub → Netlify), a transferable workflow I can apply to future products, not just this one.</li>
-          <li>Demonstrated the ability to translate ambiguous product goals into structured, machine-readable inputs (userflows, schemas, design tokens) that make AI-assisted development reliable rather than random.</li>
-          <li>Next steps if I continued: usability testing on the reminder and booking-handoff flows, real-time availability data, and instrumentation to measure reminder-set rate and reminder-to-Rec.gov click-through.</li>
-        </ul>
       </div>
     </div>
   </section>
@@ -444,17 +397,11 @@
   <!-- REFLECTION -->
   <section class="cs-section" aria-labelledby="s-reflection">
     <div class="wrap cs-section__grid">
-      <div class="cs-section__head"><span class="cs-section__num">06</span><h2 id="s-reflection">Reflection</h2></div>
+      <div class="cs-section__head"><span class="cs-section__num">05</span><h2 id="s-reflection">Reflection</h2></div>
       <div class="prose">
-        <div class="pullquote">
-          <p>Designing around one decisive moment — the permit window opening — beats designing more features. Anchoring the whole product on that event clarified every downstream decision.</p>
-        </div>
-
-        <h3>What I learned</h3>
         <ul class="flist">
-          <li>Designing around one decisive moment (the permit window opening) beats designing more features. Anchoring the whole product on that event clarified every downstream decision.</li>
-          <li>Precision in planning artifacts (userflows, schemas, design tokens) is what makes AI-assisted development produce reliable, on-brand output instead of generic results. The more explicit the input, the more usable the output.</li>
-          <li>Building with AI tools is its own skill, distinct from design or engineering. Knowing how to sequence Figma Make, Cursor, Supabase, GitHub, and Netlify — and where to step in and correct the AI's output — was the core capability this project built.</li>
+          <li><strong>What I'd do differently:</strong> test each userflow against the live app as I built, instead of catching something like the broken Rec.gov links late.</li>
+          <li><strong>What I learned:</strong> AI builds fast, but it cannot judge whether the result works the way a real user would experience it. That is still my job. Planning artifacts, the moodboard, userflows, and page structure, are what make AI output usable instead of generic. Testing the result is what makes it trustworthy. Building with AI is its own skill, separate from designing or planning, and neither replaces the other.</li>
         </ul>
       </div>
     </div>
