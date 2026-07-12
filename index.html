@@ -244,6 +244,7 @@
   .field input::placeholder, .field textarea::placeholder { color: var(--color-ink-faint); }
   .field input:hover, .field textarea:hover { border-color: var(--color-border-strong); }
   .field input:focus, .field textarea:focus { outline: none; border: var(--border-width-default) solid var(--accent); }
+  .field input:invalid:not(:placeholder-shown), .field textarea:invalid:not(:placeholder-shown) { border-color: var(--color-danger); }
   .field textarea { resize: vertical; min-height: 120px; }
   .contact__details { display: flex; flex-direction: column; gap: var(--space-6); }
   .contact__item .label { display: block; margin-bottom: var(--space-1); }
@@ -488,18 +489,18 @@
         <h2 id="contact-title">Let’s work together</h2>
       </div>
       <div class="contact__grid">
-        <form class="form" onsubmit="return false;">
+        <form class="form" id="contact-form" novalidate>
           <div class="field">
             <label for="c-name">Name</label>
-            <input id="c-name" type="text" placeholder="Your name" autocomplete="name" />
+            <input id="c-name" name="name" type="text" placeholder="Your name" autocomplete="name" required />
           </div>
           <div class="field">
             <label for="c-email">Email</label>
-            <input id="c-email" type="email" placeholder="you@example.com" autocomplete="email" />
+            <input id="c-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
           </div>
           <div class="field">
             <label for="c-msg">Message</label>
-            <textarea id="c-msg" placeholder="Tell me about your project…"></textarea>
+            <textarea id="c-msg" name="message" placeholder="Tell me about your project…" required></textarea>
           </div>
           <button type="submit" class="btn btn--accent">Send message</button>
         </form>
@@ -567,6 +568,23 @@
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
   sections.forEach(s => io.observe(s));
+
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!contactForm.checkValidity()) {
+        contactForm.reportValidity();
+        return;
+      }
+      const name = document.getElementById('c-name').value.trim();
+      const email = document.getElementById('c-email').value.trim();
+      const msg = document.getElementById('c-msg').value.trim();
+      const subject = encodeURIComponent(`Portfolio contact from ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${msg}`);
+      window.location.href = `mailto:madisonhobbs22@gmail.com?subject=${subject}&body=${body}`;
+    });
+  }
 </script>
 </body>
 </html>
