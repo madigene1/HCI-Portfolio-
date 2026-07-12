@@ -5,7 +5,7 @@ role: UX Researcher
 timeline: May–Nov 2024
 class: UX Research
 tags: [Benchmarking, Qualitative Research, VR, Hardware]
-cover: assets/cover.png
+cover: assets/Coverphoto.jpg
 tools: [Qualtrics, Miro, FigJam, Slack, Coda, Feedback Panel, Zoom, Excel]
 team: Blink UX research team
 employer: Blink UX
