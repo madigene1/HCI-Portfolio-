@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Building AI Web Applications — Madison Hobbs</title>
-<meta name="description" content="A semester of small, AI-assisted web apps — each one a focused experiment in building real, working software with AI as a collaborator." />
+<meta name="description" content="A semester of small, AI-assisted web apps — each one a focused experiment in building real, working software with AI as a build partner." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=Share+Tech+Mono&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -97,11 +97,17 @@
   .app-screens img { width: 100%; height: auto; display: block; border: none; }
   .app-screens__caption { font-family: var(--font-mono); font-size: var(--font-size-caption); color: var(--color-ink-muted); margin: calc(var(--space-2) * -1) 0 var(--space-8); }
 
-  /* CTA + FOOTER */
-  .p-cta { padding-block: var(--space-16); border-top: var(--border-width-hairline) solid var(--color-border-subtle); }
-  .btn { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; padding: var(--space-3) var(--space-6); font-family: var(--font-sans); font-size: var(--font-size-body); font-weight: var(--font-weight-medium); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); border: none; border-radius: var(--radius-none); cursor: pointer; text-decoration: none; transition: filter var(--duration-fast) var(--ease-standard), transform var(--duration-instant) var(--ease-standard); }
+  /* NEXT + FOOTER */
+  .cs-next { padding-block: var(--space-24); text-align: center; }
+  .cs-next__eyebrow { display: block; color: var(--accent); margin-bottom: var(--space-3); }
+  .cs-next h2 { font-family: var(--font-heading); font-weight: var(--font-weight-black); font-size: var(--font-size-display-sm-fluid); line-height: 0.95; text-transform: uppercase; letter-spacing: -0.01em; color: var(--color-ink-strong); margin-bottom: var(--space-4); }
+  .cs-next__desc { font-size: var(--font-size-lead); color: var(--color-ink-body); max-width: var(--container-narrow); margin: 0 auto var(--space-8); }
+  .cs-next__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center; }
+  .btn { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; padding: var(--space-3) var(--space-6); font-family: var(--font-sans); font-size: var(--font-size-body); font-weight: var(--font-weight-medium); text-transform: uppercase; letter-spacing: var(--letter-spacing-label); border: none; border-radius: var(--radius-none); cursor: pointer; text-decoration: none; transition: background var(--duration-fast) var(--ease-standard), filter var(--duration-fast) var(--ease-standard), transform var(--duration-instant) var(--ease-standard); }
   .btn--accent { background: var(--accent); color: #fff; }
   .btn--accent:hover { filter: brightness(1.08); }
+  .btn--secondary { background: transparent; color: var(--color-ink-strong); border: var(--border-width-default) solid var(--color-border-strong); }
+  .btn--secondary:hover { background: var(--color-bg-sunken); }
   .btn:active { transform: translateY(1px); }
 
   .footer { padding-block: var(--space-16); border-top: var(--border-width-hairline) solid var(--color-border-default); }
@@ -136,7 +142,7 @@
         <a href="../index.html#work" class="p-back">← Back to work</a>
         <p class="label">Case Study · 2026</p>
         <h1>Building AI Web Applications</h1>
-        <p class="p-hero__sub">A semester of small, AI-assisted web apps — each one a focused experiment in building real, working software with AI as a genuine build partner.</p>
+        <p class="p-hero__sub">A semester of small, AI-assisted web apps — each one a focused experiment in building real, working software with AI as a build partner.</p>
         <div class="p-meta">
           <div><span class="k">Role</span><span class="v">Designer &amp; Developer</span></div>
           <div><span class="k">Timeline</span><span class="v">2026</span></div>
@@ -189,6 +195,7 @@
             <li><strong>Wire real data and logic.</strong> Once the structure and system were solid, I connected real data — a public API, database tables, or stored state — and built out the loading, empty, success, and error states that a real user would actually hit.</li>
             <li><strong>Commit and deploy.</strong> Every app ended the same way: committed with meaningful history where version control was in place, and published live on Netlify.</li>
           </ul>
+          <p>The clearest trade off across the semester was speed against structure. Moving fast without a plan felt faster in the moment — Budget Island proved that — but it cost more time later fixing inconsistency than planning up front would have taken.</p>
         </div>
       </div>
     </section>
@@ -230,20 +237,10 @@
       </div>
     </section>
 
-    <!-- PROCESS -->
-    <section class="cs-section" aria-labelledby="s-process">
-      <div class="wrap cs-section__grid">
-        <div class="cs-section__head"><span class="cs-section__num">05</span><h2 id="s-process">Process</h2></div>
-        <div class="prose">
-          <p>Each app picked up where the last one left off. Budget Island taught me the basics of prompting with a single tool and no plan. Coffee Tracker added the discipline of mapping user flows and site structure before writing a single prompt. Chore Tracker's first version introduced a two tool workflow, moving between Figma Make and Cursor, and its second version added a real design system, which is the point where my apps stopped looking like separate one off experiments and started looking like they came from the same hand. Read Roulette added live data and the states that come with it. The clearest trade off across the semester was speed against structure — moving fast without a plan felt faster in the moment, but it cost more time later fixing inconsistency than planning would have taken up front.</p>
-        </div>
-      </div>
-    </section>
-
     <!-- OUTCOME -->
     <section class="cs-section" aria-labelledby="s-outcome">
       <div class="wrap cs-section__grid">
-        <div class="cs-section__head"><span class="cs-section__num">06</span><h2 id="s-outcome">Outcome</h2></div>
+        <div class="cs-section__head"><span class="cs-section__num">05</span><h2 id="s-outcome">Outcome</h2></div>
         <div class="prose">
           <p>Four small apps and one larger course project, all deployed and live, each demonstrating a distinct piece of the AI assisted build pipeline: prompting fundamentals, user flow driven planning, a Figma Make to Cursor workflow, formal design systems, live API integration and data states, and version controlled deployment. Taken together, the body of work shows I can carry a product from an idea through a working, systemized, deployed application, using AI as the primary build tool rather than a drafting aid.</p>
         </div>
@@ -253,17 +250,23 @@
     <!-- REFLECTION -->
     <section class="cs-section" aria-labelledby="s-reflection">
       <div class="wrap cs-section__grid">
-        <div class="cs-section__head"><span class="cs-section__num">07</span><h2 id="s-reflection">Reflection</h2></div>
+        <div class="cs-section__head"><span class="cs-section__num">06</span><h2 id="s-reflection">Reflection</h2></div>
         <div class="prose">
-          <p>The biggest thing I learned is that a design system is not a finishing touch — it is infrastructure that needs to exist before a project scales past its first few screens. Rebuilding Chore Tracker in Week 4 proved that in a way reading about design systems never could. If I started the semester over, I would build a lightweight design system on day one, even for something as small as Budget Island. More broadly, this semester changed how I see my own role. I came in thinking of myself as a researcher and service designer who hands off direction to engineers. I am leaving it able to carry a product from research and user flows through to a deployed, working application, which changes the kind of conversation I can have with an engineering team from the very start.</p>
+          <p>The biggest thing I learned is that a design system is not a finishing touch — it is infrastructure that needs to exist before a project scales past its first few screens. Rebuilding Chore Tracker in Week 4 proved that in a way reading about design systems never could. If I started the semester over, I would build a lightweight design system on day one, even for something as small as Budget Island. More broadly, this semester changed how I see my own role. I came in thinking of myself as a researcher and service designer who hands off direction to engineers. I am leaving it able to carry a product from research and user flows through to a deployed, working application, which changes the kind of conversation I can have with an engineering team from the very start. This portfolio is the proof: the same plan, prompt, review, and ship method that built these five apps is what built the site you're looking at right now.</p>
         </div>
       </div>
     </section>
   </article>
 
-  <section class="p-cta">
+  <section class="cs-next">
     <div class="wrap">
-      <a href="../index.html#contact" class="btn btn--accent">Get in touch</a>
+      <span class="cs-next__eyebrow label">Next project</span>
+      <h2>Scout- Camping Reservations</h2>
+      <p class="cs-next__desc">A web app that turns the deadline-driven national park permit process into a guided flow with proactive reminders.</p>
+      <div class="cs-next__actions">
+        <a href="../Scout/index.html" class="btn btn--accent">View next case study →</a>
+        <a href="../index.html#work" class="btn btn--secondary">Back to all projects</a>
+      </div>
     </div>
   </section>
 </main>
