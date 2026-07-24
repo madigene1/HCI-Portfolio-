@@ -51,7 +51,7 @@ Under the hood: **Supabase Auth** and profiles,
 
 ## 05 Reflection
 
-**What I'd do differently:** test each userflow against the live app as I built, instead of catching something like the broken Rec.gov links late.
+**What I'd do differently:** test each userflow with usability testing and interviews to be able to learn from real users. 
 
 **What I learned:** AI builds fast, but it cannot judge whether the result works the way a real user would experience it. That is still my job. Planning artifacts, the moodboard, userflows, and page structure, are what make AI output usable instead of generic. Testing the result is what makes it trustworthy. Building with AI is its own skill, separate from designing or planning, and neither replaces the other.
 
